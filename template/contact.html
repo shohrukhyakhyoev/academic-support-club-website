@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact{% endblock title %}
+
+{% block content %}
+
+
+
+  <div class="site-wrap" id="home-section">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <div class="site-wrap" id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+      <header class="site-navbar light site-navbar-target" role="banner">
+
+        <div class="container">
+          <div class="row align-items-center position-relative">
+
+            <div class="col-3">
+              <div class="site-logo">
+                <a href="/"><strong>Academic Support</strong></a>
+              </div>
+            </div>
+
+            <div class="col-9  text-right">
+
+              <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                  <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                  <li><a href="/community/questions" class="nav-link">Forum</a></li>
+                  <li><a href="/news" class="nav-link">Blog</a></li>
+                  <li><a href="/about" class="nav-link">About</a></li>
+                  <li class="active"><a href="/contact" class="nav-link">Contact</a></li>
+                    {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link"> Post</a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+
+
+          </div>
+        </div>
+
+      </header>
+
+
+    <div class="site-section-cover overlay" style="background-image: url({% static 'images/contact.png'%});">
+
+    </div>
+
+
+
+
+    <div class="site-section bg-light" id="contact-section">
+      <div class="container">
+          <div class="col-lg-4 m-auto">
+            <div class="bg-white p-3 p-md-5">
+              <h3 class="text-black mb-4">Contact Info</h3>
+              <ul class="list-unstyled footer-link">
+                <li class="d-block mb-3">
+                  <span class="d-block text-black">Address:</span>
+                  <span>8 Ziyolilar Street, Tashkent, Uzbekistan</span></li>
+                  <li class="d-block mb-3"><span class="d-block text-black">Telegram:</span><span><a href="https://t.me/AcademicHelp_bot" target="_blank">@AcademicHelp_bot</a></span></li>
+                <li class="d-block mb-3"><span class="d-block text-black">Admin's email:</span><span>shohrukhyakhyoev@gmail.com</span></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+{% endblock content %}}

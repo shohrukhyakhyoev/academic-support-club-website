@@ -1,0 +1,474 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Academic Support Club{% endblock title %}
+{% block style %}
+
+    .ask-box {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        align-items: center;
+        gap: 20px;
+        height: 100%;
+    }
+
+    .ask-box .info {
+        justify-self: center;
+        width: 60%;
+        padding: 100px 0;
+
+    }
+
+    .ask-box .info h3 {
+        font-size: 40px;
+        font-weight: bold;
+        color: dodgerblue;
+    }
+
+     .ask-box .info p {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+
+    .ask-box .info .button {
+        display: inline-block;
+        background-color: white;
+        color: black;
+        border: dodgerblue 1px solid;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .ask-box .info .button:hover {
+        color: white;
+        background-color: dodgerblue;
+    }
+
+    .ask-box img {
+        justify-self: flex-end;
+        width: 100%;
+        margin-right: 50px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .card {
+        background-color: #fff;
+        color: #333;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        padding: 25px;
+    }
+
+    .cards .card p {
+        color: black;
+        font-size: 14px;
+    }
+    
+    .course {
+      background-color: white;
+    }
+
+    /* Tutorias */
+
+    .tutorials {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tutorial {
+        background-color: #fff;
+        color: #333;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin: 10px 0;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 10px;
+    }
+
+    .tutorial img {
+        width: 90%;
+        height: 90%;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .tutorial div {
+      justify-self: center;
+      align-self: flex-start;
+      padding-top: 10px;
+    }
+
+    .tutorial div > *:first-child {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: dodgerblue;
+      letter-spacing: 1px;
+    }
+
+    .tutorial h3 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-top: 5px;
+    }
+
+    .tutorial h3 a {
+      color: black;
+    }
+
+    .tutorial .overview {
+      font-size: 1rem;
+      color: black;
+      margin: 30px 0;
+      text-align: justify;
+      padding-right: 40px;
+    }
+
+    .tutorial .tag-2 {
+      margin-bottom: 20px;
+    }
+
+
+
+    @media(max-width: 1000px) {
+
+      .tutorial img {
+        display: none;
+      }
+
+      .tutorial .overview {
+        font-size: 0.9rem;
+        color: black;
+        margin: 20px 0;
+      }
+
+      .tutorial {
+        grid-template-columns: 1fr;
+      }
+
+        #filter {
+          display: none;
+        }
+
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+        .ask-box {
+            grid-template-columns: 1fr;
+        }
+
+        .ask-box .info h3 {
+            font-size: 35px;
+        }
+
+        .ask-box .info {
+            padding: 50px 0;
+        }
+
+        .ask-box img {
+            justify-self: center;
+            margin-right: 0;
+        }
+
+    }
+
+{% endblock style %}
+
+{% block content %}
+
+    <div class="site-wrap" id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+    <header class="site-navbar light site-navbar-target" role="banner">
+
+        <div class="container">
+          <div class="row align-items-center position-relative">
+
+            <div class="col-3">
+              <div class="site-logo">
+                <a href="/" style="color: black"><strong>Academic Support</strong></a>
+              </div>
+            </div>
+
+            <div class="col-9  text-right">
+
+              <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                  <li><a href="/tutorial" class="nav-link" style="color: black">Tutorials</a></li>
+                  <li><a href="/community/questions" class="nav-link" style="color: black">Forum</a></li>
+                  <li><a href="/news" class="nav-link" style="color: black">Blog</a></li>
+                  <li><a href="/about" class="nav-link" style="color: black">About</a></li>
+                  <li><a href="/contact" class="nav-link" style="color: black">Contact</a></li>
+                  {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link" style="color: black"> Post</a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+    </header>
+
+      <!-- <div class="site-section-cover overlay" style="background-image: url({% static 'images/hero_bg.jpg' %}) ;"> -->
+    <div class="site-section">
+      <div class="main-box">
+        <div class="info">
+          <h2>Free online tutorials, with students like you.</h2>
+          <p>Watch comprehensive tutorials, join our community and study live together in small groups.</p>
+          <div class="buttons">
+            <a href="/tutorial" class="btn-blue">Start Learning</a>
+            <a href="/community/questions" class="btn-white">Get Live Help</a>
+          </div>
+        </div>
+        <img src="{%static 'images/main-page.webp' %}" alt="main-image">
+      </div>
+    </div>  
+
+    <div class="site-section">
+      <div class="sub-box">
+        <div class="message">
+          <div class="label"><span>From the Founder of</span> Academic Support Club</div>
+          <div class="text">We are a group of students with the mission of building a collaborative learning environment.</div>
+          <a href="/about" class="btn-white">About us</a>
+        </div>
+
+        <div class="founder-info">
+          <div class="personal-data">
+            <img src="{% static 'images/person.jpg' %}" alt="founder">
+            <div>
+              <div class="text-1">Founded by Shohrukh Yakhyoev</div>
+              <div class="text-2">Team Leader of Academic Support Club</div>
+            </div>
+            
+          </div>
+
+          <div class="statistics">
+            <div class="stat">
+              <div class="number">400+</div>
+              <p>Learners</p>
+            </div>
+            <div class="stat">
+              <div class="number">60+</div>
+              <p>Sessions</p>
+            </div>
+            <div class="stat">
+              <div class="number">1</div>
+              <p>Official Partner</p>
+            </div>
+          </div>
+
+        
+          <div class="supporter">
+            <img src="{% static 'images/inha.png' %}" alt="inha">
+            <div class="text-3">INHA University in Tashkent</div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>        
+
+
+    <div class="site-section">
+      <div class="ways-text">Ways to Learn</div>
+      <div class="ways">
+          <div class="way">
+            <img src="{% static 'images/video.jpg' %}" alt="online-video">
+            <div>
+              <div class="text-1">Watch tutorials to prep for your Quizes & Exams.</div>
+              <p>Find it difficult to grasp everything in lectures? No worries, we are here to help you. Find out your subject and watch short but brief videos. Most of tutorials do have additional 
+                resources gathered for a further research. In case, you still have a question, write it under tutorial's comments section or go and ask your question in the forum.</p>
+              <a href="/tutorial" class="btn-blue">Explore Tutorials</a>  
+            </div>  
+          </div>
+
+          <div class="way">
+            <div>
+              <div class="text-1">Ask questions in our forum & get answers from our members.</div>
+              <p>Join our community and be active in our forum. There you can ask a question, answer to others' questions and discuss both problems & solutions under the comments section. Discussing problems together helps you understand
+                the problem from the different point of view: you may open something new for yourself. Do not hesitate to ask: it is better to do so rather than wasting time!
+              </p>
+              <a href="/tutorial" class="btn-blue">Explore Forum</a>  
+            </div>  
+            <img src="{% static 'images/question.webp' %}" alt="question">
+          </div>
+<!-- 
+          <div class="way">
+            <img src="{% static 'images/meeting.jpeg' %}" alt="online-meeting">
+            <div>
+              <div class="text-1">Live study online in small groups.</div>
+              <p>Join other learners like you to prep for the Quizes & Exams, refresh on main concepts, share your knowledge and so more!</p>
+              <a href="/tutorial" class="btn-blue">Explore Sessions</a>  
+            </div>  
+          </div> -->
+
+      </div>
+
+    </div>
+
+
+      <div class="site-section" id="filter" style="background-color: ghostwhite; padding-top: 40px;">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="heading mb-4 text-center">
+                <h2>Filter Tutorials</h2>
+              </div>
+            </div>  
+          </div>
+          <div class="row align-items-stretch">
+            {% for filter in filters %}
+            <div class="col-lg-2">
+              <a href="/tutorial/?q={{ filter }}" class="course">
+                  <span class="badge badge-primary" style="font-size: 18px; margin-top: 25px; margin-bottom: 25px">{{ filter }}</span>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="site-section bg-light">
+        <div class="container">
+          <div class="row mb-5 align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <form method="GET" action="/tutorial" class="d-flex search-form">
+                <span class="icon-"></span>
+                <input type="search" class="form-control mr-2" name="q" placeholder="Search tutorials">
+                <input type="submit" class="btn btn-primary px-4" value="Search">
+              </form>
+            </div>
+            <div class="col-lg-6 text-lg-right">
+              <div class="d-inline-flex align-items-center ml-auto">
+              <span class="mr-4">Share:</span>
+              <a href="#" class="mx-2 social-item"><span class="icon-facebook"></span></a>
+              <a href="#" class="mx-2 social-item"><span class="icon-twitter"></span></a>
+              <a href="#" class="mx-2 social-item"><span class="icon-telegram"></span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="heading mb-4">
+                <span class="caption">Latest</span>
+                <h2>Tutorials</h2>
+              </div>
+            </div>
+            <div class="tutorials">
+                {% for tutorial in latest %}
+                  <div class="tutorial">
+                    <img src="{{ tutorial.thumbnail.url }}" alt="Image">
+                    <div>
+                      <a href="#" class="tag-1">{{ tutorial.school }}</a>
+                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <p class="overview">{{ tutorial.overview }}</p>
+                      <p class="tag-2">
+                          <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
+                      </p>
+
+                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                          View</a></p>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+    <div class="ask-box">
+        <div class="info">
+            <h3>Join Our Community</h3>
+            <p>Ask questions, help your friends and discuss problems in comments. Join us & bring your collaboration up to the next level.</p>
+            <a href="community/questions/" class="button">Learn More</a>
+        </div>
+        <img src="{% static 'images/question.webp' %}" alt="question">
+    </div>
+
+
+
+
+    {% if questions %}
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5 section-2-title">
+          <div class="col-md-6">
+            <div class="heading mb-4">
+              <span class="caption">Forum</span>
+              <h2>Recent Questions</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards">
+          {% for question in questions %}
+                <div class="card">
+                    <h5><a href="{% url 'question' question.pk %}">{{ question.title }}</a></h5>
+                    <span class="meta d-inline-block">{{ question.user }} asked {{ question.timestamp | timesince }}.</span>
+                    <p>{{ question.content | slice:"150" | safe }}</p>
+                </div>
+          {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+      <div class="site-section bg-light">
+      <div class="container">
+          <div class="row">
+            <div class="col-12" style="margin-bottom: 30px;">
+              <div class="heading mb-4">
+                <span class="caption">News</span>
+                <h2>Blog Posts</h2>
+              </div>
+            </div>
+        <div class="row">
+          {% for post in posts %}
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="post-entry-1 h-100">
+                  <a href="{% url 'post_detail' post.pk %}" class="thumbnail-link">
+                    <img src="{{ post.thumbnail.url }}" alt="Image"
+                     class="img-fluid">
+                  </a>
+                  <div class="post-entry-1-contents">
+
+                    <h2><a href="{% url 'post_detail' post.pk%}">{{ post.title }}</a></h2>
+                    <span class="meta d-inline-block mb-3">{{ post.timestamp|date }}</span>
+                    <p style="color: black; font-size: 14px">{{ post.overview }}</p>
+                  </div>
+                </div>
+              </div>
+          {% endfor %}
+        </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+
+
+{% endblock content %}

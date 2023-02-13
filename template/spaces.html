@@ -1,0 +1,417 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/community.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Study Spaces</title>
+
+    <style>
+
+        .menu-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            z-index: 2;
+            display: block;
+        }
+
+        .left-sidebar {
+            display: none;
+        }
+
+        .left-sidebar.show {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #f2f2f2;
+            width: 30%;
+            height: 100%;
+            border-right: #ccc 1px solid;
+            opacity: 0.9;
+            padding: 40px;
+            transform: translateX(-500px);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .left-sidebar.show {
+            transform: translateX(-20px);
+        }
+
+        .left-sidebar.show ul {
+            margin-top: 30px;
+        }
+
+        .left-sidebar.show ul li i {
+            margin-right: 15px;
+        }
+
+        .left-sidebar.show ul li {
+            padding: 10px;
+            margin-top: 20px;
+            border-bottom: #ccc solid 1px;
+            font-size: 1rem;
+        }
+
+        .left-sidebar.show ul li:last-child {
+            border-bottom: 0;
+        }
+
+        .search-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 2;
+            display: none;
+            text-align: center;
+        }
+
+
+
+        .intro {
+            margin: 60px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: justify;
+            gap: 20px;
+        }
+
+        .intro h3 {
+            font-size: 40px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+        }
+
+        .intro p span {
+            font-weight: bold;
+        }
+
+        .intro a {
+            display: none;
+        }
+
+        .main-block {
+            grid-template-columns: 1fr 2fr 1fr;
+            margin: 30px 0 50px; 
+
+        }
+
+
+        /* Study Spaces */
+        .subject-name {
+            display: flex;
+            gap: 5px;
+        }
+
+        .subject-name a {
+            color: gray;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .space-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 5px 0;
+            letter-spacing: 1px;
+        }
+
+        .space-time {
+            font-size: 0.9rem;
+            color: dodgerblue;
+            font-weight: 500;
+        }
+
+        .space-overview {
+            font-size: 0.9rem;
+            padding: 25px 0;
+            text-align: justify;
+        }
+
+        .space-bottom {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: -15px;
+        }
+
+        .space-bottom p {
+            font-size: 0.9rem;
+            color: black;
+            font-weight: 500;
+        }
+
+        .space-bottom a {
+            justify-self: center;
+            align-self: center;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .left-block .card >*:nth-child(2) > * {
+            margin-top: 15px;
+        }
+
+        .btn-tag {
+            text-align: center;
+            font-size: 0.7rem;
+            color: white;
+            background-color: dodgerblue;
+            border-radius: 3px;
+            padding: 3px 8px;
+        }
+        
+
+
+        @media(max-width: 1100px) {
+            .nav-bar .filter {
+                display: none;
+            }
+
+            .nav-bar .filter.show {
+                display: block;
+                position: absolute;
+                top: 65px;
+                width: 90%;
+
+            }
+
+            .nav-bar .filter.show input[type='search'] {
+                margin-bottom: 20px;
+                border-right: #ccc 1px solid;
+                opacity: 0.9;
+            }
+
+            .search-btn {
+                display: block;
+            }
+
+            .left-block {
+                display: none;
+            }
+
+            
+            .main-block {
+                grid-template-columns: 2fr 1fr;
+            }
+            
+        }
+
+
+    
+        @media(max-width: 930px) {
+            .intro h3 {
+                line-height: 50px;
+                letter-spacing: normal;
+                text-align: left;
+            }
+
+            .intro p {
+                text-align: left;
+            }
+
+            .intro a {
+                display: block;
+            }
+
+            .right-sidebar {
+                display: none;
+            }
+
+            .main-block {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 768px) {
+            .left-sidebar.show {
+                width: 50%;
+            }
+
+            .intro a {
+                align-self: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="menu-btn" id="menu"> 
+        <i class="fas fa-bars fa-1x"></i>
+    </div>
+
+    <div class="left-sidebar">
+        <ul>
+            <li><i class="fas fa-bars fa-md"></i><a href="/">Home</a></li>
+            <li class="active"><i class="fas fa-bars fa-md"></i><a href="">Forum</a></li>
+            <li><i class="fas fa-bars fa-md"></i><a href="#">Spaces</a></li>
+            {% if request.user.is_authenticated %}
+            <li><i class="fas fa-bars fa-md"></i><a href="/community/logout">Log out</a></li>
+            {% else %}
+            <li><i class="fas fa-bars fa-md"></i><a href="/community/login">Log in</a></li>
+            {% endif %}    
+        </ul>
+    </div>
+
+
+    <div class="search-btn" id="menu"> 
+        <i class="fas fa-search fa-1x"></i>
+    </div>
+
+    <div class="container">
+        <div class="nav-bar">
+            <h3>Academic Support</h3>
+            <form class="filter" method="get" action="">
+                <input class="search" type="search" value="{{ search_query }}" name="{{search_request_var}}" placeholder="Search ...">
+                <input type="submit" name="" hidden>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="intro">
+            <h3>Studying’s better with buddies.</h3>
+            <p>Reach your goals together, with the Academic Support Community, in <span>Study Spaces.</span></p>
+            <a href="#" class="btn-blue">Create Question</a>
+        </div>    
+    </div>
+
+    <div class="container">
+        <div class="box">
+
+            <div class="main-block">
+                <div class="left-block">
+                    <div class="card">
+                        <h4>Popular Tags</h4>
+                        <div>
+                            <div class="subject-name">
+                                <a href="#">Physics</a>
+                            </div>
+                            <div class="subject-name">
+                                <a href="#">Physics</a>
+                            </div>
+                            <div class="subject-name">
+                                <a href="#">Physics</a>
+                            </div>
+                            <div class="subject-name">
+                                <a href="#">Physics</a>
+                            </div>
+                            {% for tag in tags %}
+                                <a href="#" class="btn-tag">{{tag}}</a>
+                            {% endfor %}   
+                        </div>
+                    </div>
+                </div>
+              <div class="content">
+                {% if questions %}
+                    <div>
+                        <div class="filter-cards">
+                            <a href="?{{tag_request_var}}=Latest" class="filter">Latest</a>
+                            <a href="?{{tag_request_var}}=Active" class="filter">Active</a>
+                            <a href="?{{tag_request_var}}=Unanswered" class="filter">Unaswered</a>
+                            <a href="?{{tag_request_var}}=Answered" class="filter">Answered</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="subject-name">
+                            <a href="#">Physics</a>
+                        </div>
+                        <div class="space-title">Study Space</div>
+                        <div class="space-time">Fri Feb 12, 22:00</div>
+                        <div class="space-overview">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis consequatur adipisci in sunt debitis officiis illum dignissimos tempore doloribus nam.</div>
+                        <div class="space-bottom">
+                            <p class="author">Shohrukh</p>
+                            <a href="#" class="btn-blue">Join</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <h2 style="margin: 10px auto;">No questions found.</h4>    
+                {% endif %}    
+              </div>
+
+              <div class="right-sidebar">
+                {% if not request.user.is_authenticated %}
+                <div class="announcement-card">
+                    <div>
+                        <h4>Good Day</h4>
+                        <img src="{% static 'images/hand.png' %}" alt="hand">
+                    </div>
+                    <p>Welcome to Community of Academic Support Club.</p>
+                    <p>Connect, share, and engage with community and build relationships.</p>
+                    <p>Please log in if you are already a member or sign up for an account.</p>
+                    <div class="buttons">
+                        <a href="/community/signup" class="btn-blue">Join the community</a>
+                        <a href="/community/login" class="btn-white">Already a member?</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="announcement-card">
+                    <div>
+                        <h4>Good Day</h4>
+                        <img src="{% static 'images/hand.png' %}" alt="hand">
+                    </div>
+                    <p>Searching a way to boost your studies? Then why don't you study with us in groups?</p>
+                    <p>Let's discuss, analyze & solve together!</p>
+                    <p>Find an available study space or create one yourself & invite others.</p>
+                    <div class="buttons">
+                        <a href="../question/ask" class="btn-blue">Create Space</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.querySelector('.search-btn')
+        .addEventListener('click', () => {
+            document.querySelector('.filter').classList.toggle('show');
+        });
+
+        const sidebar = document.querySelector('.left-sidebar');
+        const menu = document.querySelector('.menu-btn');
+        const filerText = document.querySelector('.btn-filter');
+        const filterBox = document.querySelector('.filter-cards');
+
+        menu.addEventListener('click', openSidebar);
+        window.addEventListener('click', outsideClick);
+        filerText.addEventListener('click', openFilters);
+
+        function openSidebar() {
+            sidebar.classList.toggle('show');
+        };
+
+        function outsideClick(e) {
+            if (e.target == sidebar) {
+                sidebar.classList.remove('show');
+            }
+        } 
+
+        function openFilters() {
+            filterBox.classList.toggle('show');
+        }
+
+    </script>
+    
+</body>
+</html>    

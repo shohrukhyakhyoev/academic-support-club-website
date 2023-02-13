@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Delete Post{% endblock title %}
+
+{% block style %}
+    .card-body {
+        margin: 200px auto 50px;
+        width: 50%;
+        min-width: 200px;
+        background-color: ghostwhite;
+        border-radius: 4px;
+    }
+
+     .card-body-2 {
+        margin: 150px auto 10px;
+        width: 70%;
+        min-width: 200px;
+    }
+
+    a {
+        color: dodgerblue;
+    }
+
+
+{% endblock style %}
+
+
+{% block content %}
+
+    <header class="site-navbar site-navbar-target" role="banner">
+
+        <div class="container">
+          <div class="row align-items-center position-relative">
+
+            <div class="col-3">
+              <div class="site-logo">
+                <a href="/"><strong>Academic Support</strong></a>
+              </div>
+            </div>
+
+            <div class="col-9  text-right">
+
+              <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                    <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                  <li><a href="/community/questions" class="nav-link">Forum</a></li>
+                  <li><a href="/news" class="nav-link">Blog</a></li>
+                  <li><a href="/about" class="nav-link">About</a></li>
+                  <li><a href="/contact" class="nav-link">Contact</a></li>
+                    {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link"> Post</a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+
+
+          </div>
+        </div>
+
+    </header>
+
+   {% if authority_error %}
+      <div class="error">
+          <h5>{{ authority_error }}</h5>
+      </div>
+     {% elif login_required %}
+         <div class="error">
+          <h5>{{ authority_error }} Please, <a href="/community/login?next=/news/{{ form.instance.pk }}/delete">log in.</a></h5>
+        </div>
+    {% elif error %}
+         <div class="card-body-2">
+             <h4>Errors:</h4>
+            {% for key, value in error.items %}
+                  <h6>{{key}} : {{ value }}</h6>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card-body">
+            <h3>Delete Post</h3>
+            <form class="form" method="post">
+                {% csrf_token %}
+                <p>Are you sure to delete the post - <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>? Confirm clicking the button.</p>
+                <input class="btn btn-outline-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,369 @@
+/* Main Box */
+
+
+.main-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    margin: 110px 0 0;
+}
+
+.main-box .info {
+    justify-self: center;
+    width: 70%;
+}
+
+.main-box .info h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+}
+
+.main-box .info p {
+    font-size: 1.2rem;
+    line-height: 30px;
+    color: black;
+    padding: 10px 0;
+}
+
+.main-box img {
+    width: 90%;
+}
+
+.main-box .info .buttons {
+   display: flex;
+   gap: 10px;
+}
+
+.btn-blue {
+    display: inline-block;
+    background: dodgerblue;
+    border: dodgerblue 1px solid;
+    border-radius: 5px;
+    padding: 10px 16px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-white {
+    display: inline-block;
+    background: white;
+    border: lightgray 2px solid;
+    border-radius: 5px;
+    padding: 10px 16px;
+    color: dodgerblue;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.main-box .info .buttons a:hover {
+    transform:translateY(-5px);
+}
+
+
+/* Sub-Box */
+
+.sub-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 50px;
+    background-color: ghostwhite;
+}
+
+.sub-box .founder-info {
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-box .founder-info .personal-data {
+    display: flex;
+    gap: 20px;
+}
+
+.sub-box .founder-info .personal-data img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.sub-box .founder-info .personal-data div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sub-box .founder-info .statistics {
+    display: flex;
+    margin: 40px 0 20px;
+    gap: 40px;
+}
+
+.sub-box .founder-info .statistics .stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-box .founder-info .statistics .stat .number {
+    font-size: 35px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.sub-box .founder-info .statistics .stat p {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: -5px;
+
+}
+
+.sub-box .founder-info .supporter {
+    display: flex;
+    gap: 5px;
+}
+
+.sub-box .founder-info .supporter img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.text-1 {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    color: black;
+    font-weight: bold;
+}
+
+.text-2 {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    color: black;
+    font-weight: 500;
+}
+
+.text-3 {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: black;
+    font-weight: 600;
+    justify-self: center;
+    align-self: center;
+}
+
+.divider {
+    border-left: black 2px solid;
+}
+
+.message {
+    width: 70%;
+    justify-self: self-start;
+    align-self: self-start;
+    margin-left: 100px;
+}
+
+.message .label {
+    margin: 30px 0;
+    font-size: 14px;
+    color: darkblue;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+}
+
+.message .label span {
+    color: gray;
+}
+
+.message .text {
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 42px;
+    margin-bottom: 30px;
+}
+
+.message a {
+    padding: 8px 25px;
+}
+
+.message a:hover {
+    transform:translateY(-5px);
+}
+
+/* Ways */
+
+.ways-text {
+    text-align: center;
+    margin: -80px 0 10px;
+    font-size: 26px;
+    font-weight: bold;
+    color: dodgerblue;
+}
+
+.ways {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+}
+
+
+.ways .way {
+    display: flex;
+    margin: 40px auto;
+    width: 75%;
+    gap: 20px;
+}
+
+.ways .way div {
+    justify-self: center;
+    align-self: center;
+}
+
+.ways .way div .text-1 {
+    line-height: 28px;
+}
+
+.ways > *:nth-child(2) {
+    padding-left: 50px;
+}
+
+.ways > *:nth-child(2) img {
+    width: 50%;
+    justify-self: flex-end;
+    align-self: center;
+}
+
+.ways .way img {
+    width: 50%;
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+.ways > *:nth-child(3) div {
+    justify-self: flex-start;
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+.ways .way div p {
+    margin: 20px 0;
+    color: black;
+    text-align: justify;
+    line-height: 25px;
+    font-size: 15px;
+}
+
+.ways .way div a:hover {
+    transform:translateY(-5px);
+}
+ 
+
+
+/* Community */
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 40px;
+    height: 60px;
+}
+
+.navbar .btn-blue {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.navbar .btn-white {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.navbar div a {
+    margin-left: 10px;
+}
+
+
+
+
+
+
+@media(max-width: 1000px) 
+{
+
+    .main-box {
+        grid-template-columns: 1fr;
+        margin-top: 150px;
+        padding: 0 20px;
+    }
+
+    .main-box .info {
+        width: 90%;
+    }
+
+    .sub-box {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .message {
+        width: 90%;
+        justify-self: center;
+        align-self: center;
+        margin: 0 auto;
+    }
+
+    .message .label {
+        margin: 30px 0 10px;
+    }
+
+    .message text {
+        margin-bottom: 0;
+    }
+
+    .message a {
+        margin-top: -40px;
+    }
+
+    .sub-box .founder-info {
+       width: 90%; 
+       justify-content: center;
+       margin: 0 auto 30px;
+    }
+
+    .ways-text {
+        margin-top: 10px;
+    }
+
+    .ways .way {
+        flex-wrap: wrap;
+    }
+
+    .ways .way img {
+       display: none;
+    }
+
+    .ways > *:nth-child(2){
+        padding-left: 0;
+    }
+
+    .ways > *:nth-child(3) div {
+        margin: 0;
+    }
+
+}

@@ -1,0 +1,488 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ question.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+
+    <script src="https://kit.fontawesome.com/d715eae477.js" crossorigin="anonymous"></script>
+
+    <style>
+        .main-container, .sub-container {
+            padding: 0 10px;
+        }
+
+        .sub-container .question, .sub-container .answer-text {
+            color: black;
+            font-size: 0.9rem;
+            font-weight: normal;
+            text-align: justify;
+        }
+
+        .add-comment-text {
+            color: gray;
+        }
+
+        .form-control .comment-textarea {
+            font-size: 0.9rem;
+        }
+
+       /* Nav */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 20px 0;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+  
+        .nav-bar div {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 10px;
+        }
+
+        .nav-bar h3 {
+            font-size: 26px;
+            line-height: 26px;
+            margin: 0 10px;
+        }
+
+        .btn-blue {
+            display: inline-block;
+            background: dodgerblue;
+            border: dodgerblue 1px solid;
+            border-radius: 5px;
+            padding: 10px 16px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-white {
+            display: inline-block;
+            background: white;
+            border: lightgray 2px solid;
+            border-radius: 5px;
+            padding: 10px 16px;
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding: 40px 0;
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .footer ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .footer ul li a {
+            color: #333;
+            font-size: 1rem;
+        }
+
+        #license {
+            font-size: 1rem;
+        }
+
+        #license a {
+            color: dodgerblue
+        }
+
+        @media(max-width: 1100px) {
+            .body{
+                width: 75%;
+                margin: 0 auto;
+            }
+        }
+
+        @media(max-width: 800px) {
+            .body{
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .btn-blue {
+                margin-right: 20px;
+            }
+
+
+            .footer ul {
+                flex-direction: column;
+                gap: 5px;
+                align-self: flex-start;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <h3><a href="/" style="color: black;">Academic Support</a></h3>
+        {% if not request.user.is_authenticated %}
+            <div class="buttons">
+                <a href="/community/login" class="btn-white">Login</a>
+            </div>
+        {% else %}
+            <div class="buttons">
+                <a href="/community/logout" class="btn-white">Logout</a>
+            </div>
+        {% endif %}    
+    </div>
+</div>
+
+
+<div class="body">
+
+    <div class="heading mt-4">
+        {% if request.user == question.user %}
+            <h4>{{ question.title }}<a class="btn btn-sm btn-light" href="{% url 'question_update' question.pk %}" style="border: 0; background-color: white; margin-top: -3px;">
+                <i class="fa-solid fa-pen-to-square"></i></a>
+            </h4>
+        {% else %}
+            <h4>{{ question.title }}</h4>
+        {% endif %}
+        <div style="margin-top: 10px;">
+            <p style="word-spacing: 5px;">Asked 
+                <span style="color: black; word-spacing: 0px;">
+                    {{ question.timestamp | timesince}} ago
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <hr>
+        <div class="sub-container">
+            <div class="question">{{question.content | safe}}</div>
+            <div class="badge">
+                {% for tag in question.tag.all %}
+                    <button type="button" id="badge">{{ tag }}</button>
+                {% endfor %}
+            </div>
+            <div class="asked-time-row">
+                <span style="color: dodgerblue">{{ question.user }}</span> asked {{ question.timestamp | timesince}} ago
+            </div>
+        </div>
+
+        <div class="container">
+
+            {% if question.get_comments %}
+                <hr class="comment-hr">
+
+                {% for comment in question.get_comments %}
+
+                    <div>
+                        {% if request.user == comment.user %}
+                            <p class="question-comment" style="font-size: 13px; color: gray; margin: -5px 0"><span id="i{{ comment.pk }}">
+                                {{ comment.text }}</span>
+                            - <span style="color: dodgerblue">{{ comment.user }}</span> {{ comment.timestamp | date }}.
+                                <button class="btn btn-sm btn-light bg-white border-0" style="margin-top: -4px;"  data-bs-toggle="collapse" href="#question" aria-expanded="false" aria-controls="collapseExample0">
+                                    <i class="fa-solid fa-pen-to-square" name="i{{ comment.pk }}" id="update" onclick="question_comment_edit()"></i>
+                                </button></p></div>
+                        {% else %}
+                            <p class="question-comment"><span>
+                                {{ comment.text }}</span>
+                            - <span style="color: dodgerblue">{{ comment.user }}</span> {{ comment.timestamp | date }}.</p></div>
+                        {% endif %}
+                    <hr>
+
+                {% endfor %}
+
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <a class="add-comment-text" data-bs-toggle="collapse" href="#question" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Add a comment
+                </a>
+              {% else %}
+                <!-- Button trigger modal -->
+                <a class="add-comment-text" data-bs-toggle="modal" data-bs-target="#forCommentLoginFirst">
+                    Add a comment
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="forCommentLoginFirst" tabindex="-1" aria-labelledby="forCommentLoginFirstLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Error Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          {{ login_required }} to add a comment.
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-light" data-bs-dismiss="modal"><a href="/accounts/login">Log in</a></button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            {% endif %}
+            <div class="collapse form-floating" id="question">
+              <form class="form-floating" method="POST">
+                  {% csrf_token %}
+                  {{ question_comment_form.as_p }}
+                  <input type="submit" id="question-comment-button" name="questionComment" value="Add Comment" class="btn btn-primary btn-sm" style="margin-top:-25px; background-color: dodgerblue">
+                  <input type="hidden" value="" id="question_comment_id" name="question_comment_id">
+              </form>
+            </div>
+
+        </div>
+
+    </div>
+{#    <hr class="division">#}
+<!--Answers-->
+    <div class="main-container mt-4">
+
+        {% if question.get_answers %}
+
+            <h5>Answers: </h5>
+
+            {% for answer in question.get_answers %}
+             <div class="sub-container">
+                <div class="answer-text" id="a{{ answer.pk }}">
+                    {{ answer.content | safe }}
+                </div>
+                <div class="asked-time-row">
+                    <span style="color: dodgerblue">{{ answer.user }}</span> answered {{answer.timestamp | timesince}} ago |
+                    <a href="{% url 'answer_update' answer.pk %}"><button class="btn btn-sm btn-light bg-white border-0" style="margin-top: -4px;">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button></a>
+                </div>
+
+                {% if answer.get_comments %}
+                    <hr>
+
+                    {% for answer_comment in answer.get_comments %}
+
+                        <div>
+                            {% if request.user == answer_comment.user %}
+                                <p class="question-comment" style="font-size: 13px; color: gray; margin: -5px 0;"><span id="k{{ answer_comment.pk }}">
+                                    {{ answer_comment.text }}</span>
+                                - <span style="color: dodgerblue">{{ answer_comment.user }}</span> {{ answer_comment.timestamp | date }}.
+                                    <button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -4px;"  data-bs-toggle="collapse" href="#answer-comment" aria-expanded="false" aria-controls="collapseExample1">
+                                        <i class="fa-solid fa-pen-to-square" name="k{{ answer_comment.pk }}" id="answer-update" onclick="answer_comment_edit()"></i>
+                                    </button></p></div>
+                            {% else %}
+                                <p class="question-comment"><span>
+                                    {{ answer_comment.text }}</span>
+                                - <span style="color: dodgerblue">{{ answer_comment.user }}</span> {{ answer_comment.timestamp | date }}.</p></div>
+                            {% endif %}
+                        <hr>
+
+                    {% endfor %}
+                {% endif %}
+
+                {% if request.user.is_authenticated %}
+                    <a class="add-comment-text" data-bs-toggle="collapse" href="#answer-comment" role="button" aria-expanded="false" aria-controls="collapseExample1">
+                        Add a comment
+                    </a>
+                {% else %}
+                    <!-- Button trigger modal -->
+                    <a class="add-comment-text" data-bs-toggle="modal" data-bs-target="#forCommentLoginRequired">
+                        Add a comment
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="forCommentLoginRequired" tabindex="-1" aria-labelledby="forCommentLoginRequiredLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Error Message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            {{ login_required }} to add a comment.
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><a href="/accounts/login">Log in</a></button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                {% endif %}
+
+                <div class="collapse form-floating" id="answer-comment">
+                    <form class="form-floating" method="POST">
+                        {% csrf_token %}
+                        {{ answer_comment_form.as_p }}
+                        <input type="submit" id="answer-comment-button" value="Add Comment" class="btn btn-primary btn-sm" style="margin-top:-25px; background-color: dodgerblue">
+                        <input type="hidden" value="" id="answer_comment_id" name="answer_comment_id">
+                        <input type="hidden" name="answer_id" value="{{ answer.pk }}">
+                    </form>
+                </div>
+
+
+             </div>
+
+             <hr>
+
+            {% endfor %}
+
+        {% endif %}
+
+        <div style="margin-top: 30px;">
+
+            <h5>Your Answer</h5>
+            <form class="form mt-4" method="POST">
+                {{ answer_form.media }}
+                {% csrf_token %}
+                {{ answer_form.as_p }}
+                {% if not request.user.is_authenticated %}
+                    <input type="button" name="answer" value="Post Answer" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#LoginFirst" style="font-size: 13px; background-color: dodgerblue; margin-bottom: 10px;">
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="LoginFirst" tabindex="-1" aria-labelledby="LoginFirstLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Error Message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            {{ login_required }} to post an answer.
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><a href="/accounts/login">Log in</a></button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                {% elif request.user == question.user %}
+                    <input type="button" name="answer" value="Post Answer" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notAllowed" style="font-size: 13px; background-color: dodgerblue; margin-bottom: 10px;">
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="notAllowed" tabindex="-1" aria-labelledby="notAllowedLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Error Message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            You are not allowed to answer to your own questions.
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                {% else %}
+                    <input type="hidden" name="answer_pk" value="">
+                    <input type="submit" name="answer" value="Post Answer" class="btn btn-primary" style="font-size: 13px; background-color: dodgerblue; margin-bottom: 10px;">
+                {% endif %}
+            </form>
+
+
+
+
+            Not the answer you're looking for? Browse other questions tagged
+    {#            <div class="badge">#}
+                {% for tag in question.tag.all %}
+                    <button type="button" id="badge">{{ tag }}</button>
+                {% endfor %}
+    {#            </div>#}
+            or
+            <a href="/community/question/ask/" style="color: dodgerblue">
+                ask your own question.
+            </a>
+        </div>
+
+{#    </div>#}
+
+<!--FOOTER-->
+
+<div class="container">
+    <footer class="footer">
+        <ul>
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+            <li><a href="/tutorial" class="nav-link">Forum</a></li>
+            <li class="active"><a href="/news" class="nav-link">Blog</a></li>
+            <li><a href="/about" class="nav-link">About</a></li>
+            <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+  
+        <div id="license" class="text-center m-5">
+            <p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | All rights reserved
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
+    </footer>
+</div>
+
+
+<script>
+
+    document.querySelector('.search-btn')
+    .addEventListener('click', () => {
+        document.querySelector('.filter').classList.toggle('show');
+    });
+
+
+    const question_comment_edit_icon = document.getElementById("update");
+    question_comment_edit_icon.addEventListener("click", function() {
+        myFunction();
+    });
+
+    function question_comment_edit() {
+        let name = event.target.getAttribute('name');
+        let text = document.getElementById(name).id;
+        document.getElementById("comment").value = document.getElementById(text).textContent;
+        document.getElementById("question_comment_id").value = text.slice(1);
+        document.getElementById("question-comment-button").value = "Edit Comment"
+
+    }
+
+    const answer_comment_edit_icon = document.getElementById("answer-update");
+    answer_comment_edit_icon.addEventListener("click", function() {
+        answer_comment_edit();
+    });
+
+    function answer_comment_edit() {
+        let name = event.target.getAttribute('name');
+        let text = document.getElementById(name).id;
+        document.getElementById("answer_comment").innerHTML = document.getElementById(text).textContent;
+        document.getElementById("answer_comment_id").value = text.slice(1);
+        document.getElementById("answer-comment-button").value = "Edit Comment";
+    }
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

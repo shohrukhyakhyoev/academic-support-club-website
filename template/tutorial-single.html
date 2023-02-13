@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Learn {{ subject.title }}{% endblock title %}
+
+{% block style %}
+    #main {
+      margin: 50px 0 80px;
+    }
+
+    #main #faq .card {
+      margin-bottom: 30px;
+      border: 0;
+      border-radius: 5px;
+    }
+
+    #main #faq .card .card-header {
+      border: 0;
+      border-radius: 5px;
+      padding: 0;
+    }
+
+    #main #faq .card .card-header .btn-header-link {
+      color: #222;
+      display: block;
+      text-align: left;
+      background: #F0F8FF;
+      padding: 20px;
+    }
+
+
+    #main #faq .card .card-header .btn-header-link.collapsed {
+      background: #F0F8FF;
+      color: #222;
+    }
+
+
+    #main #faq .card .collapsing {
+      background: #fff;
+    }
+
+    #main #faq .card .collapse {
+      border: 0;
+    }
+
+    #main #faq .card .collapse.show {
+      background: #fff;
+      color: #222;
+    }
+
+
+    /* Tutorias */
+
+    .tutorials {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tutorial {
+        background-color: #fff;
+        color: #333;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin: 10px 0;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 10px;
+    }
+
+    .tutorial img {
+        width: 90%;
+        height: 90%;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .tutorial div {
+      justify-self: center;
+      align-self: flex-start;
+      padding-top: 10px;
+    }
+
+    .tutorial div > *:first-child {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: dodgerblue;
+      letter-spacing: 1px;
+    }
+
+    .tutorial h3 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-top: 5px;
+    }
+
+    .tutorial h3 a {
+      color: black;
+    }
+
+    .tutorial .overview {
+      font-size: 1rem;
+      color: black;
+      margin: 30px 0;
+      text-align: justify;
+      padding-right: 40px;
+    }
+
+    .tutorial .tag-2 {
+      margin-bottom: 20px;
+    }
+
+
+
+    @media(max-width: 1000px) {
+
+      .tutorial img {
+        display: none;
+      }
+
+      .tutorial .overview {
+        font-size: 0.9rem;
+        color: black;
+        margin: 20px 0;
+      }
+
+      .tutorial {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+{% endblock style %}
+
+
+{% block content %}
+
+    
+    <div class="site-wrap" id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+      <header class="site-navbar light site-navbar-target" role="banner">
+
+        <div class="container">
+          <div class="row align-items-center position-relative" >
+
+            <div class="col-3">
+              <div class="site-logo">
+                <a href="/"><strong>Academic Support</strong></a>
+              </div>
+            </div>
+
+            <div class="col-9  text-right">
+              
+              <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                  <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                      <li class="active"><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                      <li ><a href="/community/questions" class="nav-link">Forum</a></li>
+                      <li><a href="/news" class="nav-link">Blog</a></li>
+                      <li ><a href="/about" class="nav-link">About</a></li>
+                      <li><a href="/contact" class="nav-link">Contact</a></li>
+                      {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link"> Post</a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+
+            
+          </div>
+        </div>
+
+      </header>
+
+      
+      <div class="site-section-cover overlay" style="background-image: url({% static 'images/hero_bg.jpg' %});">
+        
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10 text-center">
+              <h1>Learn <strong>{{ subject.title }}</strong></h1>
+              <div class="pb-4 get"><strong class="text-white">Posted on {{ subject.timestamp|date }} &bullet; By {{ subject.author.name }}</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      
+      <div class="site-section">
+        <div class="container">
+
+           <div class="col-12" style="margin: -20px 0;">
+              <div class="heading mb-4">
+                <span class="caption">Tutorial</span>
+                <h2>Content</h2>
+              </div>
+           </div>
+
+            <div id="main">
+              <div class="container">
+                <div class="accordion" id="faq">
+                 {% if files %}
+                  {% for file in files %}
+                  <div class="card">
+                    <div class="card-header" id="faqhead-{{ forloop.counter }}">
+                      <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq-{{ forloop.counter }}"
+                         aria-expanded="true" aria-controls="faq-{{ forloop.counter }}">
+                          {{ file.title }}</a>
+                    </div>
+
+                    <div id="faq-{{ forloop.counter }}" class="collapse" aria-labelledby="faqhead-{{ forloop.counter }}" data-parent="#faq">
+                     {% for material in materials %}
+                         {% if material.file_id == file.id %}
+                            <div class="card-body" style="margin-right: -180px;">
+                             <div class="col-md-10" style="margin-left: -5px; margin-bottom: -45px;">
+                              <ul class="list-unstyled tutorial-section-list">
+                                    <li>
+                                      {% if material.isVideo %}
+                                        <div style="margin-top: 15px;"><span style="font-size: 18px;" class="icon-youtube-play"></span>
+                                            <a href="{% url 'item_detail' material.pk %}"><h6 style="color: gray; margin-top: -25px; margin-left:28px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6></a>
+                                        </div>
+                                      {% else %}
+                                        <div style="margin-top: 15px;"><img style="margin-top: -7px;" src="{% static 'images/doc.png' %}" >
+                                          <h6 style="color: gray; margin-top: -25px; margin-left:32px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6>
+                                        </div>
+                                      {% endif %}
+                                        <a href="{% url 'item_detail' material.pk %}" class="play">Play</a>
+                                    </li>
+                              </ul>
+                             </div>
+                            </div>
+                         {% endif %}
+                     {% endfor %}
+                    </div>
+
+                  </div>
+                  {% endfor %}
+                {% else %}
+                    <p style="margin: 10px auto; font-size: 18px;">No materials found.</p>
+                {% endif %}
+                 </div>
+               </div>
+            </div>
+        <div>
+        </div>
+      </div>
+              
+  
+      <div class="site-section bg-light">
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="heading mb-4">
+                <span class="caption">Related</span>
+                <h2>Tutorials</h2>
+              </div>
+            </div>
+              {% if related %}
+              <div class="tutorials">
+                {% for tutorial in related %}
+                  <div class="tutorial">
+                    <img src="{{ tutorial.thumbnail.url }}" alt="Image">
+                    <div>
+                      <a href="#" class="tag-1">{{ tutorial.school }}</a>
+                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <p class="overview">{{ tutorial.overview }}</p>
+                      <p class="tag-2">
+                          <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
+                      </p>
+
+                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                          View</a></p>
+                    </div>
+                  </div>
+              </div>
+                {% endfor %}
+              {% else %}
+              <p style="margin: 20px auto; padding-left: 20px; font-size: 1rem; font-weight: bold;">No tutorials found.</p>
+              {% endif %}
+
+            <div class="col mt-3">
+              {% if related %}
+              <div class="col">
+                <div class="custom-pagination">
+                    {% if related.has_previous %}
+                        <a href="?{{ page_request_var }}={{ related.previous_page_number }}">
+                            <img src="{% static 'images/la.png' %}" alt="image">
+                        </a>
+                    {% endif %}
+                    <a href="?{{ page_request_var }}={{ related.number }}">{{ related.number }}</a>
+                    {% if tutorials.has_next %}
+                        <a href="?{{ page_request_var }}={{ related.next_page_number }}">
+                            <img src="{% static 'images/ra.png' %}" alt="image">
+                        </a>
+                    {% endif %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+
+
+
+{% endblock content %}
+
+

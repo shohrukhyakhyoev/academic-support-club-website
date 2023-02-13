@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tutorials{% endblock title %}
+
+{% block style %}
+<style>
+    #faq {
+        margin: 0;
+    }
+
+    #faq .card {
+        width: 410px;
+        position: relative;
+        top: 0;
+        border: 0;
+    }
+    #faq .card .card-header {
+        border-style: solid;
+        border-color: lightgray;
+        border-width: 0.5px;
+        border-bottom-width: 1.5px;
+        padding: 0;
+    }
+
+    #faq .card .card-header .btn-header-link {
+      display: block;
+      text-align: left;
+      background: #F8F8FF;
+      color: #222;
+      padding: 12px;
+    }
+
+{#    #main #faq .card .card-header .btn-header-link:after {#}
+{#      content: "\f107";#}
+{#      font-family: 'Font Awesome 5 Free';#}
+{#      font-weight: 900;#}
+{#      float: right;#}
+{#    }#}
+
+    #faq .card .card-header .btn-header-link.show {
+      background: #F5F5F5;
+      color: green;
+    }
+
+    #faq .card .card-header .btn-header-link.collapsed {
+      background: #F8F8FF;
+      color: #222;
+    }
+
+
+{##}
+{#    #main #faq .card .card-header .btn-header-link.collapsed:after {#}
+{#      content: "\f106";#}
+{#    }#}
+
+    #faq .card .collapsing {
+      background: #fff;
+      border: 0;
+    }
+
+    #faq .card .collapse {
+      border: 0;
+    }
+
+    #faq .card .collapse.show {
+      background: white;
+      color: #222;
+    }
+
+    .top {
+        border-style: solid;
+        border-color: lightgray;
+        border-width: 0.5px;
+        margin-top: 100px;
+        margin-right: 1030px;
+        background-color: white;
+
+    }
+
+    .right {
+        border-style: solid;
+        border-color: dodgerblue;
+        border-width: 0.5px;
+        margin-top: -65px;
+        margin-left: 410px;
+        margin-right: -330px;
+        background-color: dodgerblue;
+
+    }
+
+    .right p {
+        padding: 15px 0 5px;
+        margin-left: 55px;
+        color: white;
+    }
+
+    .top p{
+        padding: 20px 0 5px;
+        margin-left: 20px;
+    }
+
+    .body {
+        margin-left: 250px;
+        margin-top: -130px;
+
+    }
+
+    .vl {
+          border-left: 1px solid lightgray;
+          margin-top: -38px;
+          margin-left: -235px;r
+          margin-right: 250px;
+          height: auto;
+    }
+
+    .comment-body {
+        margin-right: 100px;
+        margin-top: -20px;
+        padding-right: 70px;
+
+    }
+
+    </style>
+
+{% endblock style %}
+
+{% block content %}
+
+        <header class="site-navbar light" style="background-color: black;" >
+            <div class="container">
+              <div class="row align-items-center position-relative">
+
+                <div class="col-3">
+                  <div class="site-logo">
+                      <a href="/" style="margin-left: -140px;" class="font-size-20"><img style="border-radius: 50%; height: 37px;" src="{% static 'images/icon.png' %}"><strong style="margin-left: 15px;">Academic Support Club</strong></a>
+                  </div>
+                </div>
+
+                <div class="col-9  text-right">
+
+                  <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+                  <nav class="site-navigation" style="margin-top: 5px;">
+                    <ul class="site-menu">
+{#                      <li><a href="/" class="nav-link" >Home</a></li>#}
+                      <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                      <li><a href="/news" class="nav-link">News</a></li>
+                      <li><a href="/about" class="nav-link">About</a></li>
+                      <li><a href="/contact" class="nav-link" style="margin-right: 500px;">Contact</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+        </header>
+
+        <div class="top">
+              <p>Content</p>
+        </div>
+
+
+        <div class="accordion" id="faq" style="position: absolute;">
+         {% if files %}
+
+          {% for file in files %}
+          <div class="card">
+            <div class="card-header" id="faqhead-{{ forloop.counter }}">
+              <a style="margin-left: 5px;" href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq-{{ forloop.counter }}"
+                 aria-expanded="true" aria-controls="faq-{{ forloop.counter }}">
+                  {{ file.title }}</a>
+            </div>
+
+            <div id="faq-{{ forloop.counter }}" class="collapse" aria-labelledby="faqhead-{{ forloop.counter }}" data-parent="#faq">
+             {% for material in materials %}
+                 {% if material.file_id == file.id %}
+                    <div style="margin-right: -100px; margin-left: 10px;">
+                      {% if material.isVideo %}
+                        <div style="margin: 20px 10px;"><span style="font-size: 18px;" class="icon-youtube-play"></span>
+                            <h6 style="color: gray; margin-top: -23px; margin-left:28px; margin-bottom: 10px; font-size: 13px"><a href="{% url 'item_detail' material.pk %}">{{ material.title }}</a> &bullet; <span>{{ material.time }}</span></h6>
+                        </div>
+                      {% else %}
+                        <div style="margin-top: 15px;"><img style="margin-top: -7px;" src="{% static 'images/doc.png' %}" >
+                            <h6 style="color: gray; margin-top: -25px; margin-left:32px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6>
+                        </div>
+                      {% endif %}
+                    </div>
+                 {% endif %}
+             {% endfor %}
+            </div>
+
+          </div>
+          {% endfor %}
+        {% else %}
+            <p style="margin: 10px 0 -20px; font-size: 18px;">No materials found.</p>
+        {% endif %}
+         </div>
+       </div>
+
+
+        <div class="container" style="margin-left: -15px;">
+            <div class="right" >
+                <p>{{ item.course.title}}</p>
+            </div>
+
+            <div class="body">
+                 <div class="site-section">
+                    <div class="container" style="padding-left: 160px; margin-top: 60px;">
+                            <iframe width="1030" height="561" style="border: 0"
+                            src="https://www.youtube.com/embed/{{ item.url }}?controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen>
+                            </iframe>
+                    </div>
+                </div>
+                <div class="container" style="padding-left: 250px; margin-left: 160px; margin-top: -40px;">
+                  <div class="row">
+                      <div class="vl"></div>
+                    <div class="col" style="margin-left: 200px;">
+                        <div class="heading mb-4">
+                                <span class="caption">All</span>
+                                <h2>Supplementary Materials</h2>
+                          </div>
+                          <div style="margin-left: -22px; margin-top: 20px;">
+                              {{ item.attachments | safe}}
+                          </div>
+
+                         <div class="col-lg-6 text-lg-right" style="margin-left: -45px; margin-top: 30px; margin-bottom: 20px;">
+                          <div class="d-inline-flex align-items-center ml-auto">
+                              <span class="mr-4"><strong>Share:</strong></span>
+                              <a href="#" class="mx-2 social-item"><span class="icon-facebook"></span></a>
+                              <a href="#" class="mx-2 social-item"><span class="icon-twitter"></span></a>
+                              <a href="#" class="mx-2 social-item"><span class="icon-telegram"></span></a>
+                          </div>
+                        </div>
+                        <br>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+      <div>
+          <hr style="width: auto; margin-top: 0;">
+      </div>
+
+
+
+
+
+{% endblock content %}

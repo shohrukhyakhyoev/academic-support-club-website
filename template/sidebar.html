@@ -1,0 +1,139 @@
+<!--Design by foolishdeveloper.com-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/d715eae477.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+  
+  <div class="wrapper">
+   
+    <div class="section">
+    
+      <div class="hamburger">
+        <a href="#">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </div>
+      
+      <nav class="navbar navbar-expand-lg sticky-top navbar-academy bg-white bg-body-tertiary rounded">
+        <div class="container-fluid">
+          <a class="navbar-brand fw-bold fs-5" href="/">Academic Support Club</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a href="/tutorial" class="nav-link" style="color: black">Tutorials</a>
+                <a href="/community/questions" class="nav-link" style="color: black">Forum</a>
+                <a href="/news" class="nav-link" style="color: black">Blog</a>
+                <a href="/about" class="nav-link" style="color: black">About</a>
+                <a href="/contact" class="nav-link" style="color: black">Contact</a>
+            </div>  
+          </div>
+        </div>
+    </nav> 
+  
+      <div class="top_navbar">
+        
+        <h2 class="lesson-name">{{ item.title }}</h2>
+      </div>
+
+      <iframe src="https://www.youtube.com/embed/{{ item.url }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    
+
+
+		<div class="container">
+			{{ item.attachments | safe}}
+		</div>
+
+    <div class="container">
+      {% include 'questions.html' %}
+
+    </div>
+
+ <!--FOOTER-->
+  <footer class="footer">
+      <ul>
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+          <li><a href="/tutorial" class="nav-link">Forum</a></li>
+          <li class="active"><a href="/news" class="nav-link">Blog</a></li>
+          <li><a href="/about" class="nav-link">About</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div id="license" class="text-center m-5">
+          <p>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | All rights reserved
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+      </div>
+  </footer>
+
+</div>
+
+  
+        <div class="sidebar">
+
+  <!--Accordions-->
+          <div class="sidebar-container">
+            <h3 class="sidebar-header"><a style="color: black" href="{% url 'tutorial_detail' item.course.id %}">{{ item.file.course.title }}</a></h3>    
+            
+            <hr>
+            
+            <div class="accordion" id="files">
+              {% if files %}
+                {% for file in files %}
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="h{{file.pk}}">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#w{{file.pk}}" aria-expanded="true" aria-controls="w{{file.pk}}">
+                        {{ file.title }}
+                      </button>
+                    </h2>
+                    <div id="w{{file.pk}}" class="accordion-collapse collapse show" aria-labelledby="h{{file.pk}}" data-bs-parent="#files">
+                      <div class="accordion-body">
+                        {% for material in materials %}
+                          {% if material.file_id == file.id %}
+                            <div class="item">
+                              <a href="{% url 'item_detail' material.pk %}" class="link">{{ material.title }} <span style="color: black;"> &bullet; {{ material.time }}</span> </a>
+                            </div>
+                          {% endif %}
+                        {% endfor %}          
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}  
+              {% endif %}  
+              </div>
+            </div>
+
+          </div>
+          
+
+        </div> 
+  </div>
+ 
+
+
+<script>
+    var hamburger = document.querySelector(".hamburger");
+	hamburger.addEventListener("click", function(){
+		document.querySelector("body").classList.toggle("active");
+	})
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+</body>
+</html>

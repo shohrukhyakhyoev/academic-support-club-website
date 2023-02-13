@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+
+        .navbar, .navbar-academy{
+            padding-right: 1rem;
+            background-color: #fff;
+            opacity: 95%;
+            border-bottom: rgb(8, 119, 163) solid;
+            margin-bottom: 1.5rem;
+        }
+
+        .navbar-toggler{
+            background-color: dodgerblue;
+            color: #fff;
+        }
+
+
+        nav .btn, .nav-search{
+            margin-left: 0.5rem;
+            margin-bottom: 0.3rem ;
+        }
+
+        .body{
+            width: 60%;
+            margin: auto;
+        }
+
+        .form-control-search {
+            border: 1px solid lightgray;
+            padding: 9px 4px 9px 40px;
+            padding-right: 10rem;
+            margin-left: 15px;
+            background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' color='gray' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
+        }
+
+
+        .asked-time-row{
+            text-align: right;
+        }
+
+        #badge {
+            border: 0;
+            border-radius: 4px;
+            height: 22px;
+            width: auto;
+            font-size: 12px;
+            color: steelblue;
+            background-color: #d3edf8;
+            margin-right: 3px;
+        }
+
+        .badge-row{
+             margin-top: 1rem;
+        }
+
+
+        .container p, .asked-time-row {
+            font-size: 13px;
+            color: gray;
+        }
+
+        hr {
+            color: gray;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        textarea {
+            margin-top: 10px;
+            width: 500px;
+            height: 70px;
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background: white;
+            border-radius: 6px 6px 6px 6px;
+            border-style: none solid solid none;
+            border-width: medium 1px 1px medium;
+            border-color: lightgray;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+            color: black;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            line-height: 15px;
+            padding: 5px 8px;
+            transition: background-color 0.2s ease 0s;
+        }
+
+        textarea:focus {
+            background: none repeat scroll 0 0 #FFFFFF;
+            outline-width: 0;
+        }
+
+        .footer{
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+
+        .title-container{
+            margin: 1rem auto;
+            position: relative;
+        }
+
+        .qs-title{
+            display: inline-block;
+        }
+
+
+        .btn-right{
+            position: absolute;
+            right: 0;
+        }
+
+        .questions-filter-row{
+            display: flex;
+            margin: 1.5rem auto;
+        }
+
+        .number-of-questions{
+            flex-grow: 1;
+        }
+
+        .filters{
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .questions-review-card{
+            display: flex;
+        }
+
+        .number-of-answers{
+            flex-grow: 2;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .questions-review-infos{
+            flex-grow: 11;
+            padding-left: 1rem;
+        }
+
+
+        .question-text{
+            font-size: 0.9rem
+        }
+
+        .centerized{
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-group{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .btn-group a {
+            color: gray;
+        }
+
+        .btn-group a:hover {
+            color: white;
+        }
+
+        .btn-group a:active {
+            color: white;
+        }
+
+
+    </style>
+    <script src="https://kit.fontawesome.com/d715eae477.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<!--New Navbar-->
+<nav class="navbar navbar-expand-lg sticky-top navbar-academy shadow bg-body-tertiary rounded">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold fs-5" href="/">Academic Support Club</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link fs-6" aria-current="page" href="/tutorial">Tutorials</a>
+       
+            <div>
+                <form class="input-group flex-nowrap" method="get" action="">
+                    <input type="text" class="form-control form-control-search" name="{{ search_request_var }}" value="{{ search_query }}" placeholder="Search questions" aria-label="search" aria-describedby="addon-wrapping">
+                    <input type="submit" hidden />
+                </form>
+            </div>
+            {% if request.user.is_authenticated %}
+                <button href="#"  class="nav-link fs-6 btn btn-outline-light" type="button" style="border: 1px solid lightgray;"><a href="{% url 'logout' %}">Logout</a></button>
+            {% else %}
+                <button class="nav-link fs-6 btn btn-primary" id="btn" type="button" style="color: #fff; background-color: dodgerblue; padding: 5px 15px"><a href="../login" style="color: white;">Login</a></button>
+                <button href="#"  class="nav-link fs-6 btn btn-outline-light" type="button" style="border: 1px solid lightgray;"><a href="../signup">Sign up</a></button>
+            {% endif %}
+        </div>  
+      </div>
+    </div>
+</nav>
+
+<div class="body">
+    {% if search_query %}
+        <div class="title-container">
+            <h3 class="qs-title">Search Results</h3>
+            <button type="button" class="btn btn-primary btn-right" style="background-color: dodgerblue;"><a style="color: white;" href="/community/question/ask">Ask question</a></button>
+        </div>
+    {% elif tag_search_query %}
+        <div class="title-container">
+            <h3 class="qs-title">{{ tag_search_query }} questions</h3>
+            <button type="button" class="btn btn-primary btn-right" style="background-color: dodgerblue;"><a style="color: white;" href="/community/question/ask">Ask question</a></button>
+        </div>
+    {% else %}
+        <div class="title-container">
+            <h3 class="qs-title">All questions</h3>
+            <button type="button" class="btn btn-primary btn-right" style="background-color: dodgerblue;"><a style="color: white;" href="/community/question/ask">Ask question</a></button>
+        </div>
+    {% endif %}
+
+    <div class="questions-filter-row">
+        <div class="number-of-questions">
+            <h6>{{ count }} questions</h6>
+        </div>
+
+        <div class="filters">
+            <div class="btn-group" role="group">
+                <button type="button" id="btn" class="btn btn-outline-secondary btn-gr"><a href="?{{ tag_request_var }}=All">All</a></button>
+                <button type="button" id="btn" class="btn btn-outline-secondary btn-gr"><a href="?{{ tag_request_var }}=Active">Active</a></button>
+                <button type="button" id="btn" class="btn btn-outline-secondary btn-gr"><a href="?{{ tag_request_var }}=Unanswered">Unanswered</a></button>
+                <button type="button" id="btn" class="btn btn-outline-secondary btn-gr"><a href="?{{ tag_request_var }}=Answered">Answered</a></button>
+              </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    {% if questions %}
+        {% for question in questions %}
+            <!--Question review card-->
+            <div class="questions-review-card">
+                <div class="number-of-answers">
+                    <div class="answers-num"><b>{{ question.get_answers.count }}</b> answers</div>
+                </div>
+
+                <div class="questions-review-infos">
+                    <a href="{% url 'question' question.pk %}"><p id="quest">{{ question.title }}</p></a>
+                    <p class="question-text">{{ question.content|slice:"150" | safe }}...</p>
+
+                    <div class="badge-row">
+                        {% for tag in question.tag.all %}
+                            <button type="button" id="badge"><a href="?{{ search_request_var }}={{ tag }}">{{ tag }}</a></button>
+                        {% endfor %}
+                    </div>
+                    <div class="asked-time-row">
+                        <span style="color: dodgerblue">{{ question.user }}</span> asked {{ question.timestamp | timesince}} ago
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        {% endfor %}
+
+
+        {% if questions %}
+            <div class="centerized">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm">
+                        {% if questions.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ questions.previous_page_number }}&{{ search_request_var }}={{ search_query }}&{{ tag_request_var }}={{ tag_search_query }}">Prev</a>
+                            </li>
+                        {% endif %}
+                        <li class="page-item " aria-current="page">
+                            <a class="page-link" href="?{{ page_request_var }}={{ questions.number }}&{{ search_request_var }}={{ search_query }}&{{ tag_request_var }}={{ tag_search_query }}" style="padding-left: 12px; padding-right: 12px;">{{ questions.number }}</a>
+                        </li>
+                        {% if questions.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ questions.next_page_number }}&{{ search_request_var }}={{ search_query }}&{{ tag_request_var }}={{ tag_search_query }}" >Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <p>No questions yet.</p>
+    {% endif %}
+
+
+</div>
+
+
+
+
+
+    <!--FOOTER-->
+<footer>
+    <div class="footer">
+        &copy; Forum of Academic Support Club, {% now "Y" %}
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

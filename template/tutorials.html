@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tutorials{% endblock title %}
+
+{% block style %}
+/* Tutorias */
+
+.tutorials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.tutorial {
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
+
+.tutorial img {
+    width: 90%;
+    height: 90%;
+    justify-self: center;
+    align-self: center;
+}
+
+.tutorial div {
+  justify-self: center;
+  align-self: flex-start;
+  padding-top: 10px;
+}
+
+.tutorial div > *:first-child {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: dodgerblue;
+  letter-spacing: 1px;
+}
+
+.tutorial h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.tutorial h3 a {
+  color: black;
+}
+
+.tutorial .overview {
+  font-size: 1rem;
+  color: black;
+  margin: 30px 0;
+  text-align: justify;
+  padding-right: 40px;
+}
+
+.tutorial .tag-2 {
+  margin-bottom: 20px;
+}
+
+
+
+
+
+@media(max-width: 1000px) {
+
+    .tutorial img {
+      display: none;
+    }
+
+    #filter {
+      display: none;
+    }
+
+    .tutorial .overview {
+      font-size: 0.9rem;
+      color: black;
+      margin: 20px 0;
+    }
+
+    .tutorial {
+      grid-template-columns: 1fr;
+    }
+}
+
+
+{% endblock style %}
+
+
+{% block content %}
+    
+    <div class="site-wrap" id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+        <header class="site-navbar light site-navbar-target" role="banner">
+
+            <div class="container">
+              <div class="row align-items-center position-relative">
+
+                <div class="col-3">
+                  <div class="site-logo">
+                    <a href="/"><strong>Academic Support</strong></a>
+                  </div>
+                </div>
+
+                <div class="col-9  text-right">
+
+                  <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
+
+                  <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                    <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                      <li class="active"><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                      <li><a href="/community/questions" class="nav-link">Forum</a></li>
+                      <li><a href="/news" class="nav-link">Blog</a></li>
+                      <li><a href="/about" class="nav-link">About</a></li>
+                      <li><a href="/contact" class="nav-link">Contact</a></li>
+                     {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link"> Post</a></li>
+                    {% endif %}
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+        </header>
+      
+      <div class="site-section-cover overlay" style="background-image: url({% static 'images/tutorials.jpg' %});">
+
+      </div>
+
+
+
+      <div class="site-section" id="filter">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="heading mb-4">
+                <span class="caption">Filter</span>
+                <h2>Choose Course</h2>
+              </div>
+            </div>  
+          </div>
+             <div class="row align-items-stretch">
+                 {% for filter in filters %}
+                    <div class="col-lg-2">
+                      <a href="/tutorial/?q={{ filter }}" class="course">
+                          <span class="badge badge-primary" style="font-size: 18px; margin-top: 25px; margin-bottom: 25px">{{ filter }}</span>
+                      </a>
+                    </div>
+                 {% endfor %}
+             </div>
+        </div>
+      </div>
+
+
+      <div class="site-section bg-light">
+        <div class="container">
+          <div class="row mb-5 align-items-center" style="margin-left: -10px;">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <form method="GET" action="" class="d-flex search-form">
+                <span class="icon-"></span>
+                <input type="search" class="form-control mr-2" name="{{ search_request_var }}" value="{{ search_query }}" placeholder="Search tutorials">
+                <input type="submit" class="btn btn-primary px-4" value="Search">
+              </form>
+            </div>
+            <div class="col-lg-6 text-lg-right">
+              <div class="d-inline-flex align-items-center ml-auto">
+              <span class="mr-4">Share:</span>
+              <a href="#" class="mx-2 social-item"><span class="icon-facebook"></span></a>
+              <a href="#" class="mx-2 social-item"><span class="icon-twitter"></span></a>
+              <a href="#" class="mx-2 social-item"><span class="icon-telegram"></span></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              {% if search_query %}
+                  <div class="heading mb-4">
+                    <h2>Search results of: <strong style="color: forestgreen">"{{ search_query }}"</strong></h2>
+                  </div>
+              {% else %}
+                  <div class="heading mb-4">
+                      <span class="caption">All</span>
+                      <h2>Tutorials</h2>
+                  </div>
+              {% endif %}
+            </div>
+            <div class="col">
+            {% if tutorials %}
+              <div class="tutorials">
+                {% for tutorial in tutorials %}
+                  <div class="tutorial">
+                    <img src="{{ tutorial.thumbnail.url }}" alt="Image">
+                    <div>
+                      <a href="#" class="tag-1">{{ tutorial.school }}</a>
+                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <p class="overview">{{ tutorial.overview }}</p>
+                      <p class="tag-2">
+                          <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
+                      </p>
+
+                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                          View</a></p>
+                    </div>
+                  </div>
+              </div>
+                {% endfor %}
+              {% else %}
+                <p style="margin: 20px auto; padding-left: 20px; font-size: 1rem; font-weight: bold;">No tutorials found.</p>
+              {% endif %}
+            </div>
+
+
+            <div class="col mt-3 ml-auto">
+              {% if tutorials %}
+                <div class="custom-pagination">
+                    {% if tutorials.has_previous %}
+                        <a href="?{{ page_request_var }}={{ tutorials.previous_page_number }}&{{ search_request_var }}={{ search_query }}">
+                            <img src="{% static 'images/la.png' %}" alt="image">
+                        </a>
+                    {% endif %}
+                    <a href="?{{ page_request_var }}={{ tutorials.number }}&{{ search_request_var }}={{ search_query }}">{{ tutorials.number }}</a>
+                    {% if tutorials.has_next %}
+                        <a href="?{{ page_request_var }}={{ tutorials.next_page_number }}&{{ search_request_var }}={{ search_query }}">
+                            <img src="{% static 'images/ra.png' %}" alt="image">
+                        </a>
+                    {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+{% endblock content %}
+

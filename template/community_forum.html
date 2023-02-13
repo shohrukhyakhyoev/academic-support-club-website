@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{%static 'css/community.css' %}">
+    <title>Forum</title>
+</head>
+<body>
+    
+    <div class="menu-btn" id="menu"> 
+        <i class="fas fa-bars fa-1x"></i>
+    </div>
+    <div class="search-btn"> 
+        <i class="fas fa-search fa-1x"></i>
+    </div>
+
+    <div class="container">
+        <div class="nav-bar">
+            <h3>Academic Support</h3>
+            <form class="filter" method="get" action="">
+                <input class="search" type="search" value="{{ search_query }}" name="{{search_request_var}}" placeholder="Search ...">
+                <input type="submit" name="" hidden>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-box">
+            <div class="info">
+                <h2>Welcome to our Forum.</h2>
+                <p>Connect, share, and engage with community and build relationships.</p>
+                <div class="buttons">
+                <a href="/community/question/ask" class="btn-blue">Ask Question</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="box">
+            <div class="left-sidebar">
+                <ul id="menu">
+                    <li><i class="fas fa-bars fa-md"></i><a href="/">Home</a></li>
+                    <li class="active"><i class="fas fa-bars fa-md"></i><a href="">Forum</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li><i class="fas fa-bars fa-md"></i><a href="/community/logout">Log out</a></li>
+                    {% else %}
+                    <li><i class="fas fa-bars fa-md"></i><a href="/community/login">Log out</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="main-block">
+              <div class="content">
+                {% if questions %}
+                    <div>
+                        <a href="#" class="btn-filter">Sort by latest <i class="fas fa-chevron-down fa-sm"></i></a>
+                        <div class="filter-cards">
+                            <a href="?{{tag_request_var}}=Latest" class="filter">Latest</a>
+                            <a href="?{{tag_request_var}}=Active" class="filter">Active</a>
+                            <a href="?{{tag_request_var}}=Unanswered" class="filter">Unaswered</a>
+                            <a href="?{{tag_request_var}}=Answered" class="filter">Answered</a>
+                        </div>
+                    </div>
+                    {% for question in questions %}
+                        <div class="card">
+                            <h4><a href="{% url 'question' question.pk %}">{{ question.title }}</a></h4>
+                            <p>{{ question.content|slice:"150" | safe }} ...
+                            </p>
+                            <div class="bottom-info">
+                                <div>
+                                    {% for tag in question.tag.all %}
+                                        <a href="?{{ search_request_var }}={{ tag }}" class="btn-small">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="small-text"><span>{{question.user}} </span> asked {{ question.timestamp | timesince}} ago</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="pagination">
+                        {% if questions.has_previous %}
+                            <a href="?{{ page_request_var }}={{ questions.previous_page_number }}&{{ search_request_var }}={{ search_query }}">
+                                <i class="fas fa-chevron-left fa-sm"></i></a>
+                        {% endif %}
+                            <a href="?{{ page_request_var }}={{ questions.number }}&{{ search_request_var }}={{ search_query }}">{{ questions.number }}</a>
+                        {% if questions.has_next %}
+                            <a href="?{{ page_request_var }}={{ questions.next_page_number }}&{{ search_request_var }}={{ search_query }}">
+                                <i class="fas fa-chevron-right fa-sm"></i> </a>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <h2 style="margin: 10px auto;">No questions found.</h4>    
+                {% endif %}    
+              </div>
+
+              <div class="right-sidebar">
+                {% if not request.user.is_authenticated %}
+                <div class="announcement-card">
+                    <div>
+                        <h4>Good Day</h4>
+                        <img src="{% static 'images/hand.png' %}" alt="hand">
+                    </div>
+                    <p>Welcome to Community of Academic Support Club.</p>
+                    <p>Connect, share, and engage with community and build relationships.</p>
+                    <p>Please log in if you are already a member or sign up for an account.</p>
+                    <div class="buttons">
+                        <a href="/community/signup" class="btn-blue">Join the community</a>
+                        <a href="/community/login" class="btn-white">Already a member?</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="announcement-card">
+                    <div>
+                        <h4>Good Day</h4>
+                        <img src="{% static 'images/hand.png' %}" alt="hand">
+                    </div>
+                    <!-- <p>Welcome to Community of Academic Support Club.</p> -->
+                    <p>Find it difficult to solve a problem? Then why don't you ask a help from our members?</p>
+                    <p>We are here to help you!</p>
+                    <div class="buttons">
+                        <a href="../question/ask" class="btn-blue">Ask Question</a>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="card">
+                    <h4>Popular Tags</h4>
+                    <div>
+                        {% for tag in tags %}
+                            <a href="#" class="btn-tag">{{tag}}</a>
+                        {% endfor %}   
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <footer class="footer">
+            <ul>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
+                <li><a href="/tutorial" class="nav-link">Forum</a></li>
+                <li class="active"><a href="/news" class="nav-link">Blog</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+      
+            <div id="license" class="text-center m-5">
+                <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | All rights reserved
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </footer>
+    </div>
+
+
+    <script>
+        document.querySelector('.search-btn')
+        .addEventListener('click', () => {
+            document.querySelector('.filter').classList.toggle('show');
+        });
+
+        const sidebar = document.querySelector('.left-sidebar');
+        const menu = document.querySelector('.menu-btn');
+        const filerText = document.querySelector('.btn-filter');
+        const filterBox = document.querySelector('.filter-cards');
+
+        menu.addEventListener('click', openSidebar);
+        window.addEventListener('click', outsideClick);
+        filerText.addEventListener('click', openFilters);
+
+        function openSidebar() {
+            sidebar.classList.toggle('show');
+        };
+
+        function outsideClick(e) {
+            if (e.target == sidebar) {
+                sidebar.classList.remove('show');
+            }
+        } 
+
+        function openFilters() {
+            filterBox.classList.toggle('show');
+        }
+
+    </script>
+   
+</body>
+</html>
