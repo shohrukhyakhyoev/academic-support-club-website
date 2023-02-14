@@ -153,19 +153,3 @@ textarea:focus {
     outline-width: 0;
 }
 
-.footer{
-    /*background-color: rgb(33, 102, 230);*/
-    /*border-top: rgb(6, 144, 198) solid;*/
-    /*text-align: center;*/
-    color:#222;/* rgb(99, 102, 104);
-   */ padding: 2rem;
-    margin: 0 auto;
-    background-color: #FFF;
-    position:relative;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-
-}
-
-

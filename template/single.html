@@ -85,12 +85,11 @@
       </header>
 
       
-{#      <div class="site-section-cover overlay" style="background-image: url({% static 'images/hero_bg.jpg' %});">#}
       <div class="site-section-cover overlay" style="background-image: url({{ post.thumbnail.url }});">
 
         <div class="container">
           <div class="row align-items-center justify-content-center">
-            <div class="col-lg-10 text-center mt-4">
+            <div class="col-lg-10 text-center" style="margin-top: 100px;">
               <h1><strong>{{ post.title }}</strong></h1>
               {% if request.user == post.author.user %}
                   <div class="pb-4 get"><strong class="text-white">Posted on {{ post.timestamp|date }} &bullet; By {{ post.author.name }} &bullet; <a href="{% url 'post_update' post.pk %}">Edit</a> or <a href="{% url 'post_delete' post.pk %}">Delete</a></strong></div>

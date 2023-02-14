@@ -190,7 +190,7 @@
         
         <div class="container">
           <div class="row align-items-center justify-content-center">
-            <div class="col-lg-10 text-center">
+            <div class="col-lg-10 text-center mt-5">
               <h1>Learn <strong>{{ subject.title }}</strong></h1>
               <div class="pb-4 get"><strong class="text-white">Posted on {{ subject.timestamp|date }} &bullet; By {{ subject.author.name }}</strong></div>
             </div>
@@ -251,7 +251,7 @@
                   </div>
                   {% endfor %}
                 {% else %}
-                    <p style="margin: 10px auto; font-size: 18px;">No materials found.</p>
+                  <p style="margin: 20px auto; padding-left: 20px; font-size: 1rem; font-weight: bold;">No materials found.</p>
                 {% endif %}
                  </div>
                </div>

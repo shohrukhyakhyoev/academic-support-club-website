@@ -3,7 +3,7 @@
 
 {% block style %}
     .card-body {
-        margin: 150px auto 50px;
+        margin: 120px auto 50px;
         width: 60%;
     }
 
@@ -25,18 +25,30 @@
         margin-bottom: 30px;
     }
 
+    @media(max-width: 820px) {
+      .card-body {
+          width: 100%;
+      }
+
+      .input-field {
+          width: 100%;
+      }
+
+      .col-9 {
+        display: none;
+      }
+    }
 
 {% endblock style %}
 
 
 {% block content %}
-
     <header class="site-navbar site-navbar-target" role="banner">
 
         <div class="container">
           <div class="row align-items-center position-relative">
 
-            <div class="col-3">
+            <div class="col-lg-3">
               <div class="site-logo">
                 <a href="/"><strong>Academic Support</strong></a>
               </div>
@@ -48,16 +60,19 @@
 
               <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
-                    <li><a href="/community/questions" class="nav-link">Forum</a></li>
-                  <li><a href="/news" class="nav-link">Blog</a></li>
-                  <li><a href="/about" class="nav-link">About</a></li>
-                  <li><a href="/contact" class="nav-link">Contact</a></li>
+                  <li><a href="/tutorial" class="nav-link" style="color: black">Tutorials</a></li>
+                  <li><a href="/community/questions" class="nav-link" style="color: black">Forum</a></li>
+                  <li><a href="/news" class="nav-link" style="color: black">Blog</a></li>
+                  <li><a href="/about" class="nav-link" style="color: black">About</a></li>
+                  <li><a href="/contact" class="nav-link" style="color: black">Contact</a></li>
+                  {% if request.user.is_staff %}
+                        <li><a href="/news/create" class="nav-link" style="color: black"> Post</a></li>
+                    {% endif %}
                 </ul>
               </nav>
             </div>
 
-
+        
           </div>
         </div>
 
