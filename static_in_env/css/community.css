@@ -54,6 +54,7 @@ ul {
 /* Nav */
 .nav-bar {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: 60px;
@@ -86,7 +87,6 @@ ul {
 
 
 .main-box {
-    display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;

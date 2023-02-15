@@ -26,9 +26,9 @@ def register(request):
     return render(request, 'registration/signup.html', {"form": form})
 
 
-def spaces(request):
-    queryset = Question.objects.all().order_by('-timestamp')
-    return render(request, 'spaces.html', {"questions": queryset})
+# def spaces(request):
+#     queryset = Question.objects.all().order_by('-timestamp')
+#     return render(request, 'spaces.html', {"questions": queryset})
 
 
 def questions(request):

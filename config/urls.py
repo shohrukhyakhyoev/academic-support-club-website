@@ -9,7 +9,6 @@ from .forms import CustomAuthForm
 
 from community.views import (
     register,
-    spaces,
     questions,
     question,
     create_question,
@@ -42,8 +41,6 @@ urlpatterns = [
     path('', index, name='index'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
-
-    path('community/spaces/', spaces, name='spaces'),
 
     path('community/questions/', questions, name='questions'),
     path('community/question/ask/', create_question, name='question_create'),
