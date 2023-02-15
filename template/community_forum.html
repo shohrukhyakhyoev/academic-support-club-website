@@ -7,17 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{%static 'css/community.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Study Spaces</title>
+    <title>Forum</title>
 
     <style>
 
         .menu-btn {
             cursor: pointer;
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 30px;
             z-index: 2;
             display: block;
+        }
+
+        .nav-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 20px 0;
+            font-size: 13px;
+
+            top: 0;
+            width: 90%;
+            position: fixed;
+            background-color: whitesmoke;
         }
 
         .left-sidebar {
@@ -64,7 +79,7 @@
 
         .search-btn {
             cursor: pointer;
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 30px;
             z-index: 2;
@@ -75,7 +90,7 @@
 
 
         .intro {
-            margin: 50px auto;
+            margin: 120px auto 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -203,6 +218,10 @@
 
             }
 
+            .nav-bar {
+                width: 100%;
+            }
+
             .nav-bar .filter.show input[type='search'] {
                 margin-bottom: 20px;
                 border-right: #ccc 1px solid;
@@ -267,9 +286,6 @@
 
 </head>
 <body>
-    <div class="menu-btn" id="menu"> 
-        <i class="fas fa-bars fa-1x"></i>
-    </div>
 
     <div class="left-sidebar">
         <ul>
@@ -292,6 +308,9 @@
 
     <div class="container">
         <div class="nav-bar">
+            <div class="menu-btn" id="menu"> 
+                <i class="fas fa-bars fa-1x"></i>
+            </div>
             <h3><a href="/">Academic Support</a></h3>
             <form class="filter" method="get" action="">
                 <input class="search" type="search" value="{{ search_query }}" name="{{search_request_var}}" placeholder="Search ...">
