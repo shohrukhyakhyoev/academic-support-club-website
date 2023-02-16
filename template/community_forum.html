@@ -5,92 +5,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{%static 'css/community.css' %}">
+    <link rel="stylesheet" href="{%static 'css/forum.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Forum</title>
 
     <style>
 
-        .menu-btn {
-            cursor: pointer;
-            position: fixed;
-            top: 20px;
-            left: 30px;
-            z-index: 2;
-            display: block;
-        }
-
-        .nav-bar {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+        header {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
             align-items: center;
-            height: 60px;
-            padding: 20px 0;
-            font-size: 13px;
-
+            gap: 10px;
+            padding: 15px 0;
+            z-index: 2;
+            
             top: 0;
-            width: 90%;
             position: fixed;
-            background-color: whitesmoke;
+            width: 100%;
+            background: white;
+            border-bottom: whitesmoke 1px solid;
+
         }
 
-        .left-sidebar {
-            display: none;
+        header h3 {
+            margin-left: 40px;
+            justify-self: flex-start;
         }
 
-        .left-sidebar.show {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #f2f2f2;
-            width: 30%;
-            height: 100%;
-            border-right: #ccc 1px solid;
-            opacity: 0.9;
-            padding: 40px;
-            transform: translateX(-500px);
-            transition: transform 0.5s ease-in-out;
+        header h3 a {
+            color: black;
+            font-size: 25px;
         }
 
-        .left-sidebar.show {
-            transform: translateX(-20px);
+        header h3 a:hover {
+            color: black;
         }
 
-        .left-sidebar.show ul {
-            margin-top: 30px;
+        header div {
+            justify-self: flex-end;
+            margin-right: 40px;
         }
 
-        .left-sidebar.show ul li i {
-            margin-right: 15px;
+        header  .filter {
+            justify-self: center;
+            width: 60%;
         }
 
-        .left-sidebar.show ul li {
+        header  .filter input[type='search'] {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px lightgray solid;
+            height: 45px;
             padding: 10px;
-            margin-top: 20px;
-            border-bottom: #ccc solid 1px;
-            font-size: 1rem;
-        }
-
-        .left-sidebar.show ul li:last-child {
-            border-bottom: 0;
+            font-size: 14px;
         }
 
         .search-btn {
             cursor: pointer;
-            position: fixed;
-            top: 20px;
-            right: 30px;
-            z-index: 2;
             display: none;
             text-align: center;
         }
 
-
-
         .intro {
-            margin: 120px auto 80px;
+            margin: 140px auto 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -107,6 +86,8 @@
 
         .intro p {
             font-size: 1.2rem;
+            color: black;
+            font-weight: 300;
         }
 
         .intro p span {
@@ -121,58 +102,6 @@
             grid-template-columns: 1fr 2fr 1fr;
             margin: 30px 0 50px; 
 
-        }
-
-
-        /* Study Spaces */
-        .subject-name {
-            display: flex;
-            gap: 5px;
-        }
-
-        .subject-name a {
-            color: gray;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .space-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 5px 0;
-            letter-spacing: 1px;
-        }
-
-        .space-time {
-            font-size: 0.9rem;
-            color: dodgerblue;
-            font-weight: 500;
-        }
-
-        .space-overview {
-            font-size: 0.9rem;
-            padding: 25px 0;
-            text-align: justify;
-        }
-
-        .space-bottom {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: -15px;
-        }
-
-        .space-bottom p {
-            font-size: 0.9rem;
-            color: black;
-            font-weight: 500;
-        }
-
-        .space-bottom a {
-            justify-self: center;
-            align-self: center;
-            padding: 5px 10px;
-            font-size: 0.8rem;
         }
 
         .left-block .card div {
@@ -202,48 +131,36 @@
             border-radius: 3px;
             padding: 3px 8px;
         }
-        
 
+        .announcement-card p {
+            color: black;
+            font-size: 0.9rem;
+        }
+
+        .card p {
+            color: black;
+            font-size: 0.9rem;
+            font-weight: 300;
+            text-align: justify;
+            line-height: 18px;
+            margin: 15px 0 20px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            margin: 100px auto 50px;
+        }
 
         @media(max-width: 1100px) {
-            .nav-bar .filter {
-                display: none;
-            }
-
-            .nav-bar .filter.show {
-                display: block;
-                position: absolute;
-                top: 60px;
-                width: 90%;
-
-            }
-
-            .nav-bar {
-                width: 100%;
-            }
-
-            .nav-bar .filter.show input[type='search'] {
-                margin-bottom: 20px;
-                border-right: #ccc 1px solid;
-                opacity: 0.9;
-            }
-
-            .search-btn {
-                display: block;
-            }
-
             .left-block {
                 display: none;
             }
 
-            
             .main-block {
                 grid-template-columns: 2fr 1fr;
-            }
-            
+            }  
         }
-
-
     
         @media(max-width: 930px) {
             .intro h3 {
@@ -272,12 +189,45 @@
         }
 
         @media(max-width: 768px) {
-            .left-sidebar.show {
-                width: 50%;
-            }
 
             .intro a {
                 align-self: flex-start;
+            }
+            .btn-blue {
+                margin-right: 20px;
+            }
+            header .filter {
+                display: none;
+            }   
+            
+
+            header {
+                grid-template-columns: 2fr 1fr;
+            }
+
+            header h3 {
+                justify-self: flex-start;
+                margin-left: 20px;
+            }
+            
+            .search-btn {
+                display: block;
+            }
+            
+            header div {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-content: center;
+                align-items: center;
+                gap: 12px;
+                margin-right: 0;
+            }
+
+            header .filter.show {
+                display: block;
+                position: absolute;
+                top: 85px;
+                width: 90%;
             }
 
         }
@@ -287,38 +237,23 @@
 </head>
 <body>
 
-    <div class="left-sidebar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li class="active"><a href="">Forum</a></li>
-            <li class="active"><a href="/tutorial">Tutorials</a></li>
-            <li class="active"><a href="/blog">Blog</a></li>
-            {% if request.user.is_authenticated %}
-            <li><a href="/community/logout">Log out</a></li>
-            {% else %}
-            <li><a href="/community/login">Log in</a></li>
-            {% endif %}    
-        </ul>
-    </div>
-
-
-    <div class="search-btn" id="menu"> 
-        <i class="fas fa-search fa-1x"></i>
-    </div>
-
-    <div class="container">
-        <div class="nav-bar">
-            <div class="menu-btn" id="menu"> 
-                <i class="fas fa-bars fa-1x"></i>
+    <header>
+        <h3><a href="/">Academic Support</a></h3>
+        <form class="filter" method="get" action="">
+            <input class="search" name="{{search_request_var}}" value="{{search_query}}" type="search" placeholder="Search ...">
+            <input type="submit" name="" hidden>
+        </form>
+        <div>
+            <div class="search-btn" id="menu"> 
+                <i class="fas fa-search fa-1x"></i>
             </div>
-            <h3><a href="/">Academic Support</a></h3>
-            <form class="filter" method="get" action="">
-                <input class="search" type="search" value="{{ search_query }}" name="{{search_request_var}}" placeholder="Search ...">
-                <input type="submit" name="" hidden>
-            </form>
+            {% if request.user.is_authenticated %}
+                <a href="/community/logout" class="btn btn-blue">Logout</a>
+            {% else %}
+            <a href="/community/login" class="btn btn-blue">Login</a>
+            {% endif %}
         </div>
-    </div>
-
+    </header>
 
 
     <div class="container">
@@ -407,7 +342,7 @@
                             <img src="{% static 'images/hand.png' %}" alt="hand">
                         </div>
                         <!-- <p>Welcome to Community of Academic Support Club.</p> -->
-                        <p>Find it difficult to solve a problem? Then why don't you ask a help from our members?</p>
+                        <p style="color: black;">Find it difficult to solve a problem? Then why don't you ask a help from our members?</p>
                         <p>We are here to help you!</p>
                         <div class="buttons">
                             <a href="../question/ask" class="btn-blue">Ask Question</a>
@@ -419,19 +354,10 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mt-4">
         <footer class="footer">
-            <ul>
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
-                <li><a href="/tutorial" class="nav-link">Forum</a></li>
-                <li class="active"><a href="/news" class="nav-link">Blog</a></li>
-                <li><a href="/about" class="nav-link">About</a></li>
-                <li><a href="/contact" class="nav-link">Contact</a></li>
-            </ul>
-      
             <div id="license" class="text-center m-5">
-                <p>
+                <p style="font-size: 0.9rem; color: black;"> 
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -439,7 +365,7 @@
             </div>
         </footer>
     </div>
-
+    
 
     <script>
         document.querySelector('.search-btn')
@@ -447,29 +373,14 @@
             document.querySelector('.filter').classList.toggle('show');
         });
 
-        const sidebar = document.querySelector('.left-sidebar');
-        const menu = document.querySelector('.menu-btn');
         const filerText = document.querySelector('.btn-filter');
         const filterBox = document.querySelector('.filter-cards');
 
-        menu.addEventListener('click', openSidebar);
-        window.addEventListener('click', outsideClick);
         filerText.addEventListener('click', openFilters);
-
-        function openSidebar() {
-            sidebar.classList.toggle('show');
-        };
-
-        function outsideClick(e) {
-            if (e.target == sidebar) {
-                sidebar.classList.remove('show');
-            }
-        } 
 
         function openFilters() {
             filterBox.classList.toggle('show');
         }
-
     </script>
     
 </body>
