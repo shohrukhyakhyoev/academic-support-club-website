@@ -3,8 +3,20 @@
 <style>
 
     .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
         border-top: ghostwhite 2px solid;
+        padding: 50px;
     }
+
+    .footer .links img {
+        width: 22px;
+        height: 22px;
+        margin: 0 8px;
+        }
 
     #license {
         font-size: 0.9rem;
@@ -14,7 +26,12 @@
 </style>
 
 <footer class="footer">
-      <div id="license" class="text-center m-5">
+    <div class="links">
+        <a href="/"><img src="{% static 'images/telegram.png'%}"></a>
+        <a href="/"><img src="{% static 'images/youtube.png'%}"></a>
+        <a href="/"><img src="{% static 'images/instagram.png'%}"></a>
+    </div>
+      <div id="license" class="text-center">
         <p>
       <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
       &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | Part of this template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" style="color: dodgerblue" target="_blank" >Colorlib</a>
