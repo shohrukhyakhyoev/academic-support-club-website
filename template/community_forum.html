@@ -166,6 +166,10 @@
             margin: 0 8px;
         }
 
+        .footer .links img:hover {
+            transform: scaleX(1);
+        }
+
 
         @media(max-width: 1100px) {
             .left-block {
@@ -285,7 +289,7 @@
             <div class="main-block">
                 <div class="left-block">
                     <div class="card">
-                        <h4>Popular Tags</h4>
+                        <h4>Tags</h4>
                         <div>
                             {% for tag in tags %}
                                 <a href="?{{search_request_var}}={{tag}}" class="btn-tag">{{tag}}</a>
