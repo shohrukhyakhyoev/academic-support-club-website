@@ -9,6 +9,3 @@ admin.site.register(QuestionComment)
 admin.site.register(Type)
 
 
-
-
-

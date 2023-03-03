@@ -2,6 +2,14 @@
 {% load static %}
 {% block title %}About us{% endblock title %}
 
+{% block style %}
+    #list img {
+      border-radius: 50%;
+      width: 145px;
+      height: 140px;
+    }
+{% endblock style %}
+
 {% block content %}
 
 
@@ -51,7 +59,7 @@
 
 
 
-    <div class="site-section-cover overlay" style="background-image: url({% static 'images/about.png' %});">
+    <div class="site-section-cover overlay" style="margin-top: 100px; background-image: url({% static 'images/about.png' %});">
     </div>
 
 
@@ -67,7 +75,7 @@
               <span class="caption">About us</span>
               <h2>Our Club</h2>
             </div>
-            <p style="font-size: 15px; color: black;">Academic Support Club has been founded to build a collaborative learning environment in our university. Here you can get a help in several ways: watching <a href="/tutorials">tutorials</a>, reading <a href="/news">blog posts</a> and asking questions in the <a href="community/questions">forum</a>. </p>
+            <p style="font-size: 15px; color: black;">Academic Support Club has been founded to build a collaborative learning environment in our university. Here you can get a help in several ways: watching <a href="/tutorial">tutorials</a>, reading <a href="/news">blog posts</a> and asking questions in the <a href="community/questions">forum</a>. </p>
             <p style="font-size: 15px; color: black;">Content is made by students like you! So if you think you have something to share, our team is always open for new friends.</p>
           </div>
         </div>
@@ -84,7 +92,7 @@
             </div>
           </div>
         </div>
-        <div class="row align-items-stretch">
+        <div class="row align-items-stretch" id="list">
 
           <div class="col-lg-4 col-md-6 mb-5">
             <div class="post-entry-1 h-200 person-1">
@@ -114,15 +122,41 @@
           <div class="col-lg-4 col-md-6 mb-5">
             <div class="post-entry-1 h-200 person-1">
 
+              <img src="{% static 'images/romiz.jpg' %}" alt="Image">
+
+              <div class="post-entry-1-contents">
+                <span class="meta">Co-founder</span>
+                <h2 data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." >Romiz Ahrorov</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-5">
+            <div class="post-entry-1 h-200 person-1">
+
+              <img  data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." src="{% static 'images/subhiddin.JPG' %}" alt="Image"
+              class="img-fluid">
+
+              <div class="post-entry-1-contents">
+                <span class="meta">Contributor</span>
+                <h2 data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." >Subhiddin Nuriddinov</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-5">
+            <div class="post-entry-1 h-200 person-1">
+
               <img  data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." src="{% static 'images/person.jpg' %}" alt="Image"
               class="img-fluid">
 
               <div class="post-entry-1-contents">
                 <span class="meta">Contributor</span>
-                <h2 data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." >Romiz</h2>
+                <h2 data-bs-toggle="popover" data-bs-placement="bottom" title="Proactive volunteer. He is active contributor who makes tutorials for students." >Asadbek Mahmudov</h2>
               </div>
             </div>
           </div>
+
 
         </div>
       </div>

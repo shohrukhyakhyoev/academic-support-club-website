@@ -14,14 +14,15 @@
     }
 
     .input-field {
-        width: 70%;
+        width: 100%;
+        height: 100px;
     }
 
      .form-item {
         margin: 10px 0 25px;
     }
 
-    h3 {
+    h4 {
         margin-bottom: 30px;
     }
 
@@ -96,7 +97,7 @@
         </div>
     {% else %}
         <div class="card-body">
-            <h3>Update Question</h3>
+            <h4>Update Question</h4>
             {{ form.media }}
             <form class="form" method="post" action="" enctype="multipart/form-data">
               {% csrf_token %}

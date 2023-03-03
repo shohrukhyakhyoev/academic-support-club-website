@@ -97,31 +97,31 @@ def question(request, pk):
         if request.method == "POST":
             if "questionComment" in request.POST:
                 if question_comment_form.is_valid():
-                    question_comment_id = request.POST["question_comment_id"]
-                    if question_comment_id != "":
-                        # TODO consider scenario if obj not found
-                        question_comment = get_object_or_404(QuestionComment, id=int(question_comment_id))
-                        if question_comment.user == request.user:
-                            question_comment.text = question_comment_form.instance.text
-                            question_comment.save()
-                        else:
-                            context['authority_error'] = "You cannot edit other users' comments!"
-                    else:
+                    # question_comment_id = request.POST["question_comment_id"]
+                    # if question_comment_id != "":
+                    #     # TODO consider scenario if obj not found
+                    #     question_comment = get_object_or_404(QuestionComment, id=int(question_comment_id))
+                    #     if question_comment.user == request.user:
+                    #         question_comment.text = question_comment_form.instance.text
+                    #         question_comment.save()
+                    #     else:
+                    #         context['authority_error'] = "You cannot edit other users' comments!"
+                    # else:
                         question_comment_form.instance.user = request.user
                         question_comment_form.instance.question = obj
                         question_comment_form.save()
 
             elif "answer_id" in request.POST:
                 if answer_comment_form.is_valid():
-                    answer_comment_id = request.POST["answer_comment_id"]
-                    if answer_comment_id != "":
-                        answer_comment = get_object_or_404(AnswerComment, id=int(answer_comment_id))
-                        if answer_comment.user == request.user:
-                            answer_comment.text = answer_comment_form.instance.text
-                            answer_comment.save()
-                        else:
-                            context['authority_error'] = "You cannot edit other users' comments!"
-                    else:
+                    # answer_comment_id = request.POST["answer_comment_id"]
+                    # if answer_comment_id != "":
+                    #     answer_comment = get_object_or_404(AnswerComment, id=int(answer_comment_id))
+                    #     if answer_comment.user == request.user:
+                    #         answer_comment.text = answer_comment_form.instance.text
+                    #         answer_comment.save()
+                    #     else:
+                    #         context['authority_error'] = "You cannot edit other users' comments!"
+                    # else:
                         answer_id = request.POST["answer_id"]
                         # TODO consider scenario if obj not found
                         answer = get_object_or_404(Answer, id=int(answer_id))
@@ -218,6 +218,53 @@ def update_answer(request, pk):
                 context["error"] = form.errors
 
     return render(request, 'answer_update.html', context)
+
+
+def update_question_comment(request, pk):
+    obj = get_object_or_404(QuestionComment, id=pk)
+    form = QuestionCommentForm(request.POST or None, instance=obj)
+    context = {"form": form}
+
+    if not request.user.is_authenticated:
+        context["login_required"] = "Bad Request: You must be logged in first."
+    elif request.user != obj.user:
+        context["authority_error"] = "Bad Request: Comment belongs to another user. Thus, you are not " \
+                                     "allowed to edit this comment."
+    else:
+        if request.method == "POST":
+            if form.is_valid():
+                obj.text = form.instance.text
+                obj.save()
+                return redirect(reverse("question", kwargs={
+                    'pk': form.instance.question.pk
+                }))
+            else:
+                context["error"] = form.errors
+
+    return render(request, 'question_comment_update.html', context)
+
+def update_answer_comment(request, pk):
+    obj = get_object_or_404(AnswerComment, id=pk)
+    form = AnswerCommentForm(request.POST or None, instance=obj)
+    context = {"form": form}
+
+    if not request.user.is_authenticated:
+        context["login_required"] = "Bad Request: You must be logged in first."
+    elif request.user != obj.user:
+        context["authority_error"] = "Bad Request: Comment belongs to another user. Thus, you are not " \
+                                     "allowed to edit this comment."
+    else:
+        if request.method == "POST":
+            if form.is_valid():
+                obj.text = form.instance.text
+                obj.save()
+                return redirect(reverse("question", kwargs={
+                    'pk': form.instance.answer.question.pk
+                }))
+            else:
+                context["error"] = form.errors
+
+    return render(request, 'answer_comment_update.html', context)
 
 
 

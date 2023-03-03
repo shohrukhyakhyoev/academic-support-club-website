@@ -145,7 +145,7 @@
 
         @media(max-width: 800px) {
             .body{
-                width: 90%;
+                width: 95%;
                 margin: 0 auto;
             }
 
@@ -235,7 +235,7 @@
             <div class="question">{{question.content | safe}}</div>
             <div class="badge">
                 {% for tag in question.tag.all %}
-                    <button type="button" id="badge">{{ tag }}</button>
+                    <a href="../../questions?q={{tag}}"><button type="button" id="badge">{{ tag }}</button></a>
                 {% endfor %}
             </div>
             <div class="asked-time-row">
@@ -252,14 +252,14 @@
 
                     <div>
                         {% if request.user == comment.user %}
-                            <p class="question-comment" style="font-size: 13px; color: gray; margin: -5px 0"><span id="i{{ comment.pk }}">
+                            <p class="question-comment" style="font-size: 13px; color: gray; margin: -5px 0"><span>
                                 {{ comment.text }}</span>
                             - <span style="color: dodgerblue">{{ comment.user }}</span> {{ comment.timestamp | date }}.
-                                <button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -6px;"  data-bs-toggle="collapse" href="#question" aria-expanded="false" aria-controls="collapseExample0">
-                                    <i class="fa-solid fa-pen-to-square" name="i{{ comment.pk }}" id="update" onclick="question_comment_edit()"></i>
-                                </button></p></div>
+                                <a href="{% url 'question_comment_update' comment.pk %}"><button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -6px;">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button></a></p></div>
                         {% else %}
-                            <p class="question-comment"><span>
+                            <p class="question-comment"  style="font-size: 13px; color: gray; margin: -5px 0"><span>
                                 {{ comment.text }}</span>
                             - <span style="color: dodgerblue">{{ comment.user }}</span> {{ comment.timestamp | date }}.</p></div>
                         {% endif %}
@@ -324,12 +324,17 @@
                 <div class="answer-text" id="a{{ answer.pk }}">
                     {{ answer.content | safe }}
                 </div>
-                <div class="asked-time-row">
-                    <span style="color: dodgerblue">{{ answer.user }}</span> answered {{answer.timestamp | timesince}} ago |
-                    <a href="{% url 'answer_update' answer.pk %}"><button class="btn btn-sm btn-light bg-white border-0" style="margin-top: -4px;">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button></a>
-                </div>
+                {% if request.user == answer.user %}
+                    <div class="asked-time-row">
+                        <span style="color: dodgerblue">{{ answer.user }}</span> answered {{answer.timestamp | timesince}} ago |
+                        <a href="{% url 'answer_update' answer.pk %}"><button class="btn btn-sm btn-light bg-white border-0" style="margin-top: -4px;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button></a>
+                    </div>
+                {% else %}
+                    <div class="asked-time-row">
+                        <span style="color: dodgerblue">{{ answer.user }}</span> answered {{answer.timestamp | timesince}} ago</div>   
+                {% endif %} 
 
                 {% if answer.get_comments %}
                     <hr>
@@ -341,11 +346,13 @@
                                 <p class="question-comment" style="font-size: 13px; color: gray; margin: -5px 0;"><span id="k{{ answer_comment.pk }}">
                                     {{ answer_comment.text }}</span>
                                 - <span style="color: dodgerblue">{{ answer_comment.user }}</span> {{ answer_comment.timestamp | date }}.
-                                <button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -6px;"  data-bs-toggle="collapse" href="#answer-comment" aria-expanded="false" aria-controls="collapseExample1">
+                                <a href="{% url 'answer_comment_update' answer_comment.pk %}"><button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -6px;">
+                                    <i class="fa-solid fa-pen-to-square"></i></button></a></p></div>
+                                <!-- <button class="btn btn-sm btn-light bg-transparent border-0" style="margin-top: -6px;"  data-bs-toggle="collapse" href="#answer-comment" aria-expanded="false" aria-controls="collapseExample{{answer_comment.pk}}">
                                         <i class="fa-solid fa-pen-to-square" name="k{{ answer_comment.pk }}" id="answer-update" onclick="answer_comment_edit()"></i>
-                                    </button></p></div>
+                                    </button></p></div> -->
                             {% else %}
-                                <p class="question-comment"><span>
+                                <p class="question-comment"  style="font-size: 13px; color: gray; margin: -5px 0"><span>
                                     {{ answer_comment.text }}</span>
                                 - <span style="color: dodgerblue">{{ answer_comment.user }}</span> {{ answer_comment.timestamp | date }}.</p></div>
                             {% endif %}
@@ -355,7 +362,7 @@
                 {% endif %}
 
                 {% if request.user.is_authenticated %}
-                    <a class="add-comment-text" data-bs-toggle="collapse" href="#answer-comment" role="button" aria-expanded="false" aria-controls="collapseExample1">
+                    <a class="add-comment-text" data-bs-toggle="collapse" href="#answer-comment{{answer.pk}}" role="button" aria-expanded="false" aria-controls="collapseExample{{answer.pk}}">
                         Add a comment
                     </a>
                 {% else %}
@@ -385,12 +392,12 @@
 
                 {% endif %}
 
-                <div class="collapse form-floating" id="answer-comment">
+                <div class="collapse form-floating" id="answer-comment{{answer.pk}}">
                     <form class="form-floating" method="POST">
                         {% csrf_token %}
                         {{ answer_comment_form.as_p }}
                         <input type="submit" id="answer-comment-button" value="Add Comment" class="btn btn-primary btn-sm" style="margin-top:-25px; background-color: dodgerblue">
-                        <input type="hidden" value="" id="answer_comment_id" name="answer_comment_id">
+                        <!-- <input type="hidden" value="" id="answer_comment_id" name="answer_comment_id"> -->
                         <input type="hidden" name="answer_id" value="{{ answer.pk }}">
                     </form>
                 </div>
@@ -426,7 +433,6 @@
                             {{ login_required }} to post an answer.
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><a href="/accounts/login">Log in</a></button>
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                           </div>
                         </div>
@@ -466,7 +472,7 @@
             Not the answer you're looking for? Browse other questions tagged
     {#            <div class="badge">#}
                 {% for tag in question.tag.all %}
-                    <button type="button" id="badge">{{ tag }}</button>
+                <a href="../../questions?q={{tag}}"><button type="button" id="badge">{{ tag }}</button></a>
                 {% endfor %}
     {#            </div>#}
             or
@@ -511,32 +517,32 @@
     });
 
 
-    const question_comment_edit_icon = document.getElementById("update");
-    question_comment_edit_icon.addEventListener("click", function() {
-        myFunction();
-    });
+    // const question_comment_edit_icon = document.getElementById("update");
+    // question_comment_edit_icon.addEventListener("click", function() {
+    //     myFunction();
+    // });
 
-    function question_comment_edit() {
-        let name = event.target.getAttribute('name');
-        let text = document.getElementById(name).id;
-        document.getElementById("comment").value = document.getElementById(text).textContent;
-        document.getElementById("question_comment_id").value = text.slice(1);
-        document.getElementById("question-comment-button").value = "Edit Comment"
+    // function question_comment_edit() {
+    //     let name = event.target.getAttribute('name');
+    //     let text = document.getElementById(name).id;
+    //     document.getElementById("comment").value = document.getElementById(text).textContent;
+    //     document.getElementById("question_comment_id").value = text.slice(1);
+    //     document.getElementById("question-comment-button").value = "Edit Comment"
 
-    }
+    // }
 
-    const answer_comment_edit_icon = document.getElementById("answer-update");
-    answer_comment_edit_icon.addEventListener("click", function() {
-        answer_comment_edit();
-    });
+    // const answer_comment_edit_icon = document.getElementById("answer-update");
+    // answer_comment_edit_icon.addEventListener("click", function() {
+    //     answer_comment_edit();
+    // });
 
-    function answer_comment_edit() {
-        let name = event.target.getAttribute('name');
-        let text = document.getElementById(name).id;
-        document.getElementById("answer_comment").innerHTML = document.getElementById(text).textContent;
-        document.getElementById("answer_comment_id").value = text.slice(1);
-        document.getElementById("answer-comment-button").value = "Edit Comment";
-    }
+    // function answer_comment_edit() {
+    //     let name = event.target.getAttribute('name');
+    //     let text = document.getElementById(name).id;
+    //     document.getElementById("answer_comment").innerHTML = document.getElementById(text).textContent;
+    //     document.getElementById("answer_comment_id").value = text.slice(1);
+    //     document.getElementById("answer-comment-button").value = "Edit Comment";
+    // }
 
 </script>
 

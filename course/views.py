@@ -186,7 +186,7 @@ def update_post(request, pk):
 
 
 def delete_post(request, pk):
-    post = Post.objects.filter(id=pk)[0]
+    post = get_object_or_404(Post, id=pk)
     author = get_author(request.user)
     context = {
         "post": post

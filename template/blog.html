@@ -2,6 +2,23 @@
 {% load static %}
 {% block title %}News{% endblock title %}
 
+{% block style %}
+   @media(max-width: 1000px) {
+    #front-img, #share {
+      display: none;
+    }
+    #mainbox {
+      padding-top: 180px;
+      padding-left: 5px;
+    }
+
+    #all-posts {
+      margin-top: -40px;
+    }
+
+  }
+{% endblock style %}
+
 {% block content %}
     
     <div class="site-wrap" id="home-section">
@@ -51,10 +68,10 @@
 
 
       
-      <div class="site-section-cover overlay" style="background-image: url({% static 'images/blog.jpg' %});">
+      <div class="site-section-cover overlay" id="front-img" style="background-image: url({% static 'images/blog.jpg' %});">
       </div>
 
-      <div class="site-section bg-light">
+      <div class="site-section bg-light" id="mainbox">
       <div class="container">
           <div class="row mb-5 align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
@@ -64,7 +81,7 @@
                 <input type="submit" class="btn btn-primary px-4" value="Search">
               </form>
             </div>
-            <div class="col-lg-6 text-lg-right">
+            <div class="col-lg-6 text-lg-right" id="share">
               <div class="d-inline-flex align-items-center ml-auto">
               <span class="mr-4">Share:</span>
               <a href="#" class="mx-2 social-item"><span class="icon-facebook"></span></a>
@@ -74,7 +91,7 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" id="all-posts">
             <div class="col-12">
               {% if search_query %}
                   <div class="heading mb-4">

@@ -3,35 +3,69 @@
 {% block title %}Post{% endblock title %}
 
 {% block style %}
+
     a {
         text-decoration: none;
-        color: white;
-    }
-
-    a:hover {
         color: dodgerblue;
-        text-decoration: none;
     }
 
     .custom-container {
-        margin: 0 auto;
-        max-width: 1140px;
-        padding: 0 40px;
+        margin: 80px auto -20px;
+        max-width: 1100px;
+        padding: 0 180px;
     }
 
-    .custom-container div {
+    .custom-container .top-info {
+        display: flex;
+        flex-direction: column;
         color: black;
+        font-size: 1rem;
+        margin: 50px auto 30px;
+    }
+
+    .custom-container .top-info h3 {
+      justify-self: center;
+      align-self: center;
+      font-weight: bold;
+    }
+
+    .custom-container .overview {
         font-size: 1.1rem;
-        text-align: justify;
+        margin: 15px 0;
     }
 
-    @media(max-width: 768px){
-         .custom-container div {
-            font-size: 1rem;
-         }
+    .custom-container .top-info div strong {
+        font-size: 1rem;
+        color: gray;
+    }
+
+    .custom-container img {
+      width: 100%;
+    }
+
+    .custom-container .content {
+      justify-self: center;
+      align-self: center;
+      padding-top: 40px;
+      text-align: justify;
+      font-size: 1rem;
+      color: black;
+    }
+
+    @media(max-width: 800px){
+      .custom-container {
+        margin: 120px auto -20px;
+        max-width: 1100px;
+        padding: 0 20px;
     }
 
 
+    .custom-container .top-info h3 {
+      text-align: center;
+      font-weight: bold;
+    }
+
+  }
 
 {% endblock style %}
 
@@ -82,27 +116,19 @@
 
     </header>
 
-
-      
-      <div class="site-section-cover overlay" style="background-image: url({{ post.thumbnail.url }});">
-
-        <div class="container">
-          <div class="row align-items-center justify-content-center">
-            <div class="col-lg-10 text-center" style="margin-top: 100px;">
-              <h1><strong>{{ post.title }}</strong></h1>
-              {% if request.user == post.author.user %}
-                  <div class="pb-4 get"><strong class="text-white">Posted on {{ post.timestamp|date }} &bullet; By {{ post.author.name }} &bullet; <a href="{% url 'post_update' post.pk %}">Edit</a> or <a href="{% url 'post_delete' post.pk %}">Delete</a></strong></div>
-              {% else %}
-                  <div class="pb-4 get"><strong class="text-white">Posted on {{ post.timestamp|date }} &bullet; By {{ post.author.name }}</strong></div>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-
     <div class="site-section">
         <div class="custom-container">
-             <div>
+             <div class="top-info">
+                <h3><strong>{{ post.title }}</strong></h1>
+                <p class="overview">{{post.overview}}</p> 
+                {% if request.user.is_superuser %}
+                   <div><strong>Posted on {{ post.timestamp|date }}  | <a href="{% url 'post_update' post.pk %}">Edit</a> | <a href="{% url 'post_delete' post.pk %}">Delete</a></strong></div>
+                {% else %}
+                  <div><strong>Posted on {{ post.timestamp|date }}</strong></div>
+                {% endif %}
+                </div> 
+             <img src="{{ post.thumbnail.url }}" alt="post-image">
+             <div class="content">
                 {{ post.content | safe }}
             </div>
         </div>

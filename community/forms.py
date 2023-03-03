@@ -40,7 +40,7 @@ class QuestionCommentForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea(
         attrs={
             "class": "comment-textarea",
-            "id": "comment"
+            "id": "comment",
         }), label='')
 
     class Meta:
@@ -52,7 +52,7 @@ class AnswerCommentForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea(
         attrs={
             "class": "comment-textarea",
-            "id": "answer_comment"
+            "id": "acomment"
         }), label='')
 
     class Meta:

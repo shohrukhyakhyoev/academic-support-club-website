@@ -34,6 +34,11 @@
     .wrapper .section .container li{
         list-style-type: disc;
       }
+
+    .text-center p {
+      padding-bottom: -20px;
+    }  
+
     </style>
 
 
@@ -82,23 +87,9 @@
 			{{ item.attachments | safe}}
 		</div>
 
-    <div class="container">
-      {% include 'questions.html' %}
-
-    </div>
-
  <!--FOOTER-->
-  <footer class="footer">
-      <ul>
-          <li><a href="/" class="nav-link">Home</a></li>
-          <li><a href="/tutorial" class="nav-link">Tutorials</a></li>
-          <li><a href="/tutorial" class="nav-link">Forum</a></li>
-          <li class="active"><a href="/news" class="nav-link">Blog</a></li>
-          <li><a href="/about" class="nav-link">About</a></li>
-          <li><a href="/contact" class="nav-link">Contact</a></li>
-      </ul>
-
-      <div id="license" class="text-center m-5">
+  <footer class="footer" style="border-top: whitesmoke 2px solid;">
+      <div id="license" class="text-center">
           <p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | All rights reserved

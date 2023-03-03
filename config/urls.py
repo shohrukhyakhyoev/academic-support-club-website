@@ -13,7 +13,9 @@ from community.views import (
     question,
     create_question,
     update_question,
-    update_answer
+    update_answer,
+    update_question_comment,
+    update_answer_comment
 )
 
 from course.views import (
@@ -48,6 +50,10 @@ urlpatterns = [
     path('community/question/<pk>/update/', update_question, name='question_update'),
     path('community/answer/<pk>/update/', update_answer, name='answer_update'),
 
+    path('community/question/comment/<pk>/update/', update_question_comment, name='question_comment_update'),
+    path('community/answer/comment/<pk>/update/', update_answer_comment, name='answer_comment_update'),
+
+
     path('tutorial/', tutorials, name='tutorial'),
     path('material/<pk>/', ItemDetailView.as_view(), name='item_detail'),
     path('tutorial/<id>/', tutorial, name="tutorial_detail"),
@@ -57,7 +63,6 @@ urlpatterns = [
     path('news/<pk>/', PostDetailView.as_view(), name='post_detail'),
     path('news/<pk>/update/', update_post, name='post_update'),
     path('news/<pk>/delete/', delete_post, name='post_delete')
-
 ]
 
 
