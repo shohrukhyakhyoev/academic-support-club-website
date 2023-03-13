@@ -77,7 +77,7 @@ def tutorials(request):
             Q(school__title__icontains=search_query)
         ).distinct()
 
-    subjects = paginate_objects(request, subjects, 3)
+    subjects = paginate_objects(request, subjects, 6)
 
     context = {
         'tutorials': subjects,
@@ -91,7 +91,7 @@ def tutorials(request):
     return render(request, 'tutorials.html', context)
 
 
-def tutorial(request, id):
+def tutorial(request, id, slug):
     subject = get_object_or_404(Course, id=id)
     files = File.objects.filter(course_id=subject.id)
     materials = Item.objects.filter(course_id=subject.id)
@@ -120,7 +120,7 @@ def news(request):
     if search_request_var:
         posts = posts.filter(title__icontains=search_query)
 
-    posts = paginate_objects(request, posts, 6)
+    posts = paginate_objects(request, posts, 12)
 
     context = {
         'posts': posts,
@@ -147,9 +147,10 @@ def create_post(request):
         if request.method == "POST":
             if form.is_valid():
                 form.instance.author = author
-                form.save()
+                post = form.save()
                 return redirect(reverse("post_detail", kwargs={
-                    'pk': form.instance.pk
+                    'pk': form.instance.pk,
+                    'slug': post.slug
                 }))
             else:
                 context["error"] = form.errors
@@ -175,9 +176,10 @@ def update_post(request, pk):
     else:
         if request.method == "POST":
             if form.is_valid():
-                form.save()
+                post = form.save()
                 return redirect(reverse("post_detail", kwargs={
-                    'pk': form.instance.pk
+                    'pk': form.instance.pk,
+                    'slug': post.slug
                 }))
             else:
                 context["error"] = form.errors

@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="{%static 'css/community.css' %}">
     <link rel="stylesheet" href="{%static 'css/forum.css' %}">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Forum</title>
 
@@ -160,17 +161,6 @@
              color: black;
         }
 
-        .footer .links img {
-            width: 22px;
-            height: 22px;
-            margin: 0 8px;
-        }
-
-        .footer .links img:hover {
-            transform: scaleX(1);
-        }
-
-
         @media(max-width: 1100px) {
             .left-block {
                 display: none;
@@ -310,7 +300,7 @@
                         </div>
                         {% for question in questions %}
                             <div class="card">
-                                <h4><a href="{% url 'question' question.pk %}">{{ question.title }}</a></h4>
+                                <h4><a href="{% url 'question' question.pk question.slug %}">{{ question.title }}</a></h4>
                                 <p>{{ question.content|slice:"150" | safe }} ...
                                 </p>
                                 <div class="bottom-info">
@@ -375,14 +365,9 @@
 
     <div class="container mt-4">
         <footer class="footer">
-            <div class="links">
-                <a href="https://t.me/iut_academicHelp" target="_blank"><img src="{% static 'images/telegram.png'%}"></a>
-                <a href="https://www.youtube.com/@iut_AcademicHelp"><img src="{% static 'images/youtube.png'%}"></a>
-                <a href="https://www.instagram.com/charliedepp1/"><img src="{% static 'images/instagram.png'%}"></a>
-            </div>
             <div id="license" class="text-center m-5">
                 <p> 
-                &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club
+                &copy; <script>document.write(new Date().getFullYear());</script> Forum of Academic Support Club
                 </p>
             </div>
         </footer>

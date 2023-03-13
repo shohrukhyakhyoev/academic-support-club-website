@@ -79,7 +79,7 @@
             <h3>Delete Post</h3>
             <form class="form" method="post">
                 {% csrf_token %}
-                <p>Are you sure to delete the post - <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>? Confirm clicking the button.</p>
+                <p>Are you sure to delete the post - <a href="{% url 'post_detail'  pk=post.pk slug=post.slug %}">{{ post.title }}</a>? Confirm clicking the button.</p>
                 <input class="btn btn-outline-primary" type="submit" value="Submit">
             </form>
         </div>

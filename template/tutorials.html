@@ -221,13 +221,13 @@
                     <img src="{{ tutorial.thumbnail.url }}" alt="Image">
                     <div>
                       <a href="#" class="tag-1">{{ tutorial.school }}</a>
-                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <h3><a href="{% url 'tutorial_detail' id=tutorial.pk slug=tutorial.slug %}">{{ tutorial.title }}</a></h3>
                       <p class="overview">{{ tutorial.overview }}</p>
                       <p class="tag-2">
                           <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
                       </p>
 
-                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                      <p><a href="{% url 'tutorial_detail' id=tutorial.pk slug=tutorial.slug %}" class="btn btn-primary custom-btn">
                           View</a></p>
                     </div>
                   </div>
@@ -237,9 +237,9 @@
                 <p style="margin: 20px auto; padding-left: 20px; font-size: 1rem; font-weight: bold;">No tutorials found.</p>
               {% endif %}
             </div>
+            </div>
 
-
-            <div class="col mt-3 ml-auto">
+            <div class="container mt-3">
               {% if tutorials %}
                 <div class="custom-pagination">
                     {% if tutorials.has_previous %}
@@ -256,7 +256,7 @@
                 </div>
               {% endif %}
             </div>
-
+            
           </div>
         </div>
       </div>

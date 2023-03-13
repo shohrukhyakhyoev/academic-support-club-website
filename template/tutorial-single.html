@@ -231,14 +231,14 @@
                                     <li>
                                       {% if material.isVideo %}
                                         <div style="margin-top: 15px;"><span style="font-size: 18px;" class="icon-youtube-play"></span>
-                                            <a href="{% url 'item_detail' material.pk %}"><h6 style="color: gray; margin-top: -25px; margin-left:28px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6></a>
+                                            <a href="{% url 'item_detail' pk=material.pk slug=material.slug %}"><h6 style="color: gray; margin-top: -25px; margin-left:28px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6></a>
                                         </div>
                                       {% else %}
                                         <div style="margin-top: 15px;"><img style="margin-top: -7px;" src="{% static 'images/doc.png' %}" >
                                           <h6 style="color: gray; margin-top: -25px; margin-left:32px; margin-bottom: 10px;">{{ material.title }} &bullet; <span>{{ material.time }}</span></h6>
                                         </div>
                                       {% endif %}
-                                        <a href="{% url 'item_detail' material.pk %}" class="play">Play</a>
+                                        <a href="{% url 'item_detail'  pk=material.pk slug=material.slug %}" class="play">Play</a>
                                     </li>
                               </ul>
                              </div>
@@ -277,13 +277,13 @@
                     <img src="{{ tutorial.thumbnail.url }}" alt="Image">
                     <div>
                       <a href="#" class="tag-1">{{ tutorial.school }}</a>
-                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <h3><a href="{% url 'tutorial_detail' id=tutorial.pk slug=tutorial.slug %}">{{ tutorial.title }}</a></h3>
                       <p class="overview">{{ tutorial.overview }}</p>
                       <p class="tag-2">
                           <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
                       </p>
 
-                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                      <p><a href="{% url 'tutorial_detail' id=tutorial.pk slug=tutorial.slug %}" class="btn btn-primary custom-btn">
                           View</a></p>
                     </div>
                   </div>

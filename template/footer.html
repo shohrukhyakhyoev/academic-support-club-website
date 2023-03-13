@@ -16,27 +16,122 @@
         width: 22px;
         height: 22px;
         margin: 0 8px;
+    }
+
+    .top .lists ul {
+        list-style: none;
+    }
+
+    .top .lists ul > *:first-child {
+        font-weight: bold;
+        padding: 0;
+    }
+
+    .top .lists ul li {
+        font-size: 0.9rem;
+        padding: 4px 0;
+        color: black;
+    }
+
+    .top .lists ul li a {
+        font-size: 0.9rem;
+        padding: 4px 0;
+        color: black;
+    }
+
+    .top {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .top .lists {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-self: flex-end;
+        gap: 40px;
+        
+    }
+
+    .bottom {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 40px;
+        gap: 20px;
+    }
+
+    .bottom .links {
+        margin-right: 32px;
+    }
+
+    .bottom .links a i {
+        font-size: 1.5rem;
+        padding-left: 25px;
+    }
+
+    .bottom .links a i:hover {
+        font-size: 2rem;
+        /* transform: translateY(-10px); */
+    }
+
+
+    @media(max-width: 800px) {
+        .top {
+            grid-template-columns: 1fr;
+            width: 100%;
         }
 
-    #license {
-        font-size: 0.9rem;
+        .top .lists {
+            grid-template-columns: 1fr 1fr; 
+            justify-self: flex-start;
+            gap: 20px;
+        }
+
+        .top .lists ul {
+            margin: 0;
+            padding: 0;
+        }
     }
+
 
 
 </style>
 
 <footer class="footer">
-    <div class="links">
-        <a href="https://t.me/iut_academicHelp" target="_blank"><img src="{% static 'images/telegram.png'%}"></a>
-        <a href="https://www.youtube.com/@iut_AcademicHelp"><img src="{% static 'images/youtube.png'%}"></a>
-        <a href="https://www.instagram.com/charliedepp1/"><img src="{% static 'images/instagram.png'%}"></a>
+    <div class="container">
+        <div class="top">
+            <p id="mission" style="color: black; font-size: 1.1rem">Our mission is to provide a free, high quaily academic support to students of Inha University in Tashkent.</p>
+            <div class="lists">
+                <ul>
+                    <li><a href="{% url 'about' %}">Company</a></li>
+                    <li><a href="{% url 'news' %}">Blog</a></li>
+                    <li><a href="{% url 'about' %}">About us</a></li>
+                    <li><a href="https://t.me/iut_academicHelp" target="_blank">Join us</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'tutorial' %}">Tutorials</a></li>
+                    <li><a href="/tutorial?q=Mathematics">Mathematics</a></li>
+                    <li><a href="/tutorial?q=Physics">Physics</a></li>
+                    <li><a href="/tutorial?q=Engineering">Engineering</a></li>
+                    <li><a href="/tutorial?q=Programming">Programming</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Tutorials</a></li>
+                    <li><a href="https://t.me/iut_academicHelp" target="_blank">Help bot</a></li>
+                    <li><a href="mailto: acsupiut@gmail.com">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom">
+            <p style="color: black; font-size: 0.9rem">&copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | Part of this template is made by <a href="https://colorlib.com" style="color: dodgerblue" target="_blank" >Colorlib</a></p>
+            <!-- <p style="color: black; font-size: 0.9rem">&copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | Part of this template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" style="color: dodgerblue" target="_blank" >Colorlib</a></p> -->
+            <div class="links">
+                <a href="https://t.me/iut_academicHelp" target="_blank"><i class="fa fa-telegram"></i></a>
+                <a href="https://www.youtube.com/@iut_AcademicHelp"><i class="fa fa-youtube-play"></i></a>
+                <a href="https://uz.linkedin.com/company/academic-help-iut"><i class="fa fa-linkedin-square"></i></a>
+            </div>
+        </div>
     </div>
-      <div id="license" class="text-center">
-        <p>
-      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | Part of this template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" style="color: dodgerblue" target="_blank" >Colorlib</a>
-      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      </p>
-      </div>
-
 </footer>

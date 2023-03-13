@@ -76,7 +76,7 @@ def questions(request):
     return render(request, 'community_forum.html', context)
 
 
-def question(request, pk):
+def question(request, pk, slug):
     obj = get_object_or_404(Question, id=pk)
 
     question_comment_form = QuestionCommentForm(request.POST or None)
@@ -146,7 +146,8 @@ def question(request, pk):
                         answer.save()
 
             return redirect(reverse("question", kwargs={
-                'pk': obj.pk
+                'pk': obj.pk,
+                'slug': obj.slug
             }))
 
     return render(request, 'question_detail.html', context)
@@ -162,9 +163,10 @@ def create_question(request):
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
-                form.save()
+                obj = form.save()
                 return redirect(reverse("question", kwargs={
-                    'pk': form.instance.pk
+                    'pk': form.instance.pk,
+                    'slug': obj.slug
                 }))
             else:
                 context["error"] = form.errors
@@ -172,7 +174,7 @@ def create_question(request):
     return render(request, 'question_create.html', context)
 
 
-def update_question(request, pk):
+def update_question(request, pk, slug):
     obj = get_object_or_404(Question, id=pk)
     form = QuestionForm(request.POST or None, instance=obj)
     context = {"form": form}
@@ -185,9 +187,10 @@ def update_question(request, pk):
     else:
         if request.method == "POST":
             if form.is_valid():
-                form.save()
+                obj = form.save()
                 return redirect(reverse("question", kwargs={
-                    'pk': form.instance.pk
+                    'pk': form.instance.pk,
+                    'slug': obj.slug
                 }))
             else:
                 context["error"] = form.errors

@@ -263,7 +263,7 @@
                 </div>
 
                 <div class="questions-review-infos">
-                    <a href="{% url 'question' question.pk %}"><p id="quest">{{ question.title }}</p></a>
+                    <a href="{% url 'question' question.pk question.slug %}"><p id="quest">{{ question.title }}</p></a>
                     <p class="question-text">{{ question.content|slice:"150" | safe }}...</p>
 
                     <div class="badge-row">

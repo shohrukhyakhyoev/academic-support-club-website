@@ -1,4 +1,6 @@
 from tinymce import HTMLField
+from django.template.defaultfilters import slugify  # new
+
 
 from django.contrib.auth import get_user_model
 
@@ -44,6 +46,12 @@ class Course(models.Model):
     home = models.BooleanField(default=False)
     linked_course = models.ForeignKey(
         'self', related_name='linked', on_delete=models.SET_NULL, blank=True, null=True)
+    
+    slug = models.SlugField(null=False, default="slug")
+
+    def save(self, *args, **kwargs):  # new
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -67,6 +75,12 @@ class Item(models.Model):
     time = models.CharField(max_length=50, default="1h 35m")
     isVideo = models.BooleanField(default=False)
 
+    slug = models.SlugField(null=False, default="slug")
+
+    def save(self, *args, **kwargs):  # new
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
     def __str__(self):
         return self.course.title + " | " + self.file.title + " | " + self.title
 
@@ -84,13 +98,21 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     thumbnail = models.ImageField()
 
+    slug = models.SlugField(null=False, default="slug")
+
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return redirect(reverse('post_detail', kwargs={
-            'pk': self.pk
+            'pk': self.pk,
+            'slug': self.slug
         }))
+    
+    def save(self, *args, **kwargs):  # new
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 
 

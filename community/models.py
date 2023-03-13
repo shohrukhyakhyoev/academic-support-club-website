@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
 from tinymce import HTMLField
+from django.template.defaultfilters import slugify  # new
 
 
 class Type(models.Model):
@@ -17,6 +18,12 @@ class Question(models.Model):
     content = HTMLField()
     timestamp = models.DateTimeField(default=now)
     tag = models.ManyToManyField(Type)
+
+    slug = models.SlugField(null=False, default="slug")
+
+    def save(self, *args, **kwargs):  # new
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

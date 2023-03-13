@@ -120,7 +120,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            margin: 50px auto 30px;
+            margin: 0 auto;
         }
 
         .footer p {
@@ -214,7 +214,7 @@
 
     <div class="heading mt-4">
         {% if request.user == question.user %}
-            <h4>{{ question.title }}<a class="btn btn-sm btn-light" href="{% url 'question_update' question.pk %}" style="border: 0; background-color: white; margin-top: -3px;">
+            <h4>{{ question.title }}<a class="btn btn-sm btn-light" href="{% url 'question_update' question.pk question.slug %}" style="border: 0; background-color: white; margin-top: -3px;">
                 <i class="fa-solid fa-pen-to-square"></i></a>
             </h4>
         {% else %}
@@ -488,14 +488,9 @@
 
 <div class="container" style="border-top: lightgray 0.9px solid; margin-top: 50px;">
     <footer class="footer">
-        <div class="links">
-            <a href="https://t.me/iut_academicHelp" target="_blank"><img src="{% static 'images/telegram.png'%}"></a>
-            <a href="https://www.youtube.com/@iut_AcademicHelp"><img src="{% static 'images/youtube.png'%}"></a>
-            <a href="https://www.instagram.com/charliedepp1/"><img src="{% static 'images/instagram.png'%}"></a>
-        </div>
-        <div id="license" class="text-center">
+        <div id="license" class="text-center m-5">
             <p> 
-            &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club
+            &copy; <script>document.write(new Date().getFullYear());</script> Forum of Academic Support Club
             </p>
         </div>
     </footer>

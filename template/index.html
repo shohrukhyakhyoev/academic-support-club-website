@@ -382,13 +382,13 @@
                     <img src="{{ tutorial.thumbnail.url }}" alt="Image">
                     <div>
                       <a href="#" class="tag-1">{{ tutorial.school }}</a>
-                      <h3><a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a></h3>
+                      <h3><a href="{% url 'tutorial_detail' id=tutorial.pk slug=tutorial.slug %}">{{ tutorial.title }}</a></h3>
                       <p class="overview">{{ tutorial.overview }}</p>
                       <p class="tag-2">
                           <span class="badge badge-primary" style="margin-left: 2px;">{{ tutorial.category }}</span>
                       </p>
 
-                      <p><a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary custom-btn">
+                      <p><a href="{% url 'tutorial_detail' tutorial.pk tutorial.slug %}" class="btn btn-primary custom-btn">
                           View</a></p>
                     </div>
                   </div>
@@ -428,7 +428,7 @@
         <div class="cards">
           {% for question in questions %}
                 <div class="card">
-                    <h5><a href="{% url 'question' question.pk %}">{{ question.title }}</a></h5>
+                    <h5><a href="{% url 'question' question.pk question.slug %}">{{ question.title }}</a></h5>
                     <span class="meta d-inline-block">{{ question.user }} asked {{ question.timestamp | timesince }}.</span>
                     <p>{{ question.content | slice:"150" | safe }}</p>
                 </div>
@@ -450,13 +450,13 @@
           {% for post in posts %}
               <div class="col-lg-4 col-md-6 mb-4">
                 <div class="post-entry-1 h-100">
-                  <a href="{% url 'post_detail' post.pk %}" class="thumbnail-link">
+                  <a href="{% url 'post_detail' pk=post.pk slug=post.slug %}" class="thumbnail-link">
                     <img src="{{ post.thumbnail.url }}" alt="Image"
                      class="img-fluid">
                   </a>
                   <div class="post-entry-1-contents">
 
-                    <h2><a href="{% url 'post_detail' post.pk%}">{{ post.title }}</a></h2>
+                    <h2><a href="{% url 'post_detail' pk=post.pk slug=post.slug %}">{{ post.title }}</a></h2>
                     <span class="meta d-inline-block mb-3">{{ post.timestamp|date }}</span>
                     <p style="color: black; font-size: 14px">{{ post.overview }}</p>
                   </div>

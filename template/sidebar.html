@@ -92,7 +92,7 @@
       <div id="license" class="text-center">
           <p>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          &copy; <script>document.write(new Date().getFullYear());</script> Academic Support Club | All rights reserved
+          &copy; <script>document.write(new Date().getFullYear());</script> Academy of Academic Support Club 
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
       </div>
@@ -105,7 +105,7 @@
 
   <!--Accordions-->
           <div class="sidebar-container">
-            <h3 class="sidebar-header"><a style="color: black" href="{% url 'tutorial_detail' item.course.id %}">{{ item.file.course.title }}</a></h3>    
+            <h3 class="sidebar-header"><a style="color: black" href="{% url 'tutorial_detail' item.course.id item.course.slug %}">{{ item.file.course.title }}</a></h3>    
             
             <hr>
             
@@ -123,7 +123,7 @@
                         {% for material in materials %}
                           {% if material.file_id == file.id %}
                             <div class="item">
-                              <a href="{% url 'item_detail' material.pk %}" class="link">{{ material.title }} <span style="color: black;"> &bullet; {{ material.time }}</span> </a>
+                              <a href="{% url 'item_detail' material.pk material.slug %}" class="link">{{ material.title }} <span style="color: black;"> &bullet; {{ material.time }}</span> </a>
                             </div>
                           {% endif %}
                         {% endfor %}          
